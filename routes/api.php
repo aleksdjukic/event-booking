@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Middleware\PreventDoubleBooking;
 
 Route::prefix('v1')->group(function (): void {
     Route::get('/ping', function () {
@@ -34,7 +36,13 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('/tickets/{id}', [TicketController::class, 'destroy']);
     });
 
+    Route::middleware(['auth:sanctum', 'role:customer'])->group(function (): void {
+        Route::post('/tickets/{id}/bookings', [BookingController::class, 'store'])
+            ->middleware(PreventDoubleBooking::class);
+    });
+
     Route::middleware(['auth:sanctum', 'role:admin,customer'])->group(function (): void {
-        // Booking/Payment routes will be added in the next steps.
+        Route::get('/bookings', [BookingController::class, 'index']);
+        Route::put('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
     });
 });

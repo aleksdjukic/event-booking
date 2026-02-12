@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'status' => 'string',
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
