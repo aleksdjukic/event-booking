@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\EventController;
+use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
 
 Route::prefix('v1')->group(function (): void {
@@ -28,8 +29,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/events', [EventController::class, 'store']);
         Route::put('/events/{id}', [EventController::class, 'update']);
         Route::delete('/events/{id}', [EventController::class, 'destroy']);
-
-        // Ticket write routes will be added in the next steps.
+        Route::post('/events/{event_id}/tickets', [TicketController::class, 'store']);
+        Route::put('/tickets/{id}', [TicketController::class, 'update']);
+        Route::delete('/tickets/{id}', [TicketController::class, 'destroy']);
     });
 
     Route::middleware(['auth:sanctum', 'role:admin,customer'])->group(function (): void {
