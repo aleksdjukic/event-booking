@@ -1,28 +1,29 @@
 # Event Booking System Backend (Laravel 12)
 
 ## Overview
-API-only Event Booking System built with Laravel 12.
-Core modules: Sanctum auth, RBAC, Events, Tickets, Bookings, Payments (mocked), caching, queued notifications, and tests.
+API-only Event Booking System built with Laravel 12. It includes Sanctum authentication, role-based access control (RBAC), events, tickets, bookings, mocked payments, caching, queued notifications, and automated tests.
 
 ## Setup
 1. `composer install`
 2. `cp .env.example .env`
-3. Create SQLite file:
-   - macOS/Linux: `touch database/database.sqlite`
-   - Windows: create `database/database.sqlite` manually
+3. `touch database/database.sqlite`
 4. `php artisan key:generate`
-5. `php artisan migrate:fresh --seed` (creates demo users automatically)
+5. `php artisan migrate:fresh --seed`
 6. `php artisan test`
 7. `php artisan serve`
 
-## Demo Users (Quick Testing)
+SQLite file note:
+- macOS/Linux: `touch database/database.sqlite`
+- Windows: create `database/database.sqlite` manually
+
+## Demo Credentials
 - `admin@example.com` / `password123`
 - `organizer@example.com` / `password123`
 - `customer@example.com` / `password123`
 
-> Note: Besides these 3 demo users, seeding also creates the main skill-test dataset (admins/organizers/customers, events, tickets, bookings, payments).
+Seeders also create the full dataset for skill-test review (users, events, tickets, bookings, and payments).
 
-## API Endpoints (ALL under /api/v1)
+## API Endpoints (`/api/v1`)
 - `GET /api/v1/ping`
 - `POST /api/v1/auth/register`
 - `POST /api/v1/auth/login`
@@ -42,67 +43,50 @@ Core modules: Sanctum auth, RBAC, Events, Tickets, Bookings, Payments (mocked), 
 - `POST /api/v1/bookings/{id}/payment`
 - `GET /api/v1/payments/{id}`
 
-## Roles & Permissions Summary
-- `admin`
-  - full access to events, tickets, bookings, and payments
-- `organizer`
-  - manage own events and tickets
-  - forbidden for customer-scoped bookings/payments endpoints
-- `customer`
-  - create bookings, view own bookings, cancel own pending bookings
-  - pay bookings (ownership enforced), view own payments
+## Roles and Permissions
+- `admin`: full access to events, tickets, bookings, and payments.
+- `organizer`: manages only own events and tickets; cannot use customer-scoped booking/payment flows.
+- `customer`: creates bookings, views own bookings, cancels own pending bookings, pays own bookings, views own payments.
 
-## Response Envelope
-Controller responses use a consistent JSON envelope:
-- success response:
-  - `success: true`
-  - `message: string`
-  - `data: mixed`
-  - `errors: null`
-- error response:
-  - `success: false`
-  - `message: string`
-  - `data: null`
-  - `errors: mixed|null`
+## Response Envelope and Status Codes
+Every API response follows:
+- `success: bool`
+- `message: string`
+- `data: mixed|null`
+- `errors: mixed|null`
 
-Status codes used:
-- `200` success read/update/delete/logout/me
-- `201` successful create/register/booking/payment
-- `401` unauthenticated
-- `403` forbidden
-- `404` not found
-- `409` conflict (inventory, duplicate payment, invalid state, double booking)
-- `422` validation errors
+Status codes:
+- `200`: successful read/update/delete/logout/me
+- `201`: successful create/register/booking/payment
+- `401`: unauthenticated
+- `403`: forbidden
+- `404`: not found
+- `409`: conflict (inventory, duplicate payment, invalid state, double booking)
+- `422`: validation errors
 
-## Caching Notes
-- Events index cache is used only when query params contain only `page`.
-- Cache key format: `events:index:v{version}:page:{page}`.
-- TTL: `120` seconds.
-- Version key invalidation strategy: `events:index:version` is incremented on event/ticket mutations.
+## Caching
+- Events index response is cached only when query params contain only `page`.
+- Cache key format: `events:index:v{version}:page:{page}`
+- TTL: `120` seconds
+- Invalidations use version bumping via `events:index:version` on event/ticket mutations.
 
 ## Design Decisions
-- `role` is stored in DB as string for portability and represented in code via `App\Enums\Role` (enum cast on `User`).
-- `User -> payments` relation is implemented as `hasManyThrough` via `bookings`.
-- `tickets.quantity` is remaining inventory and is decremented only on successful payment.
+- `users.role` is stored as string in DB for portability and cast to `App\Enums\Role` in the `User` model.
+- `User -> payments` is implemented with `hasManyThrough` via `bookings`.
+- `tickets.quantity` is treated as remaining inventory and is decremented only after successful payment.
 
-## Queue & Notification Note
-- Booking confirmation notification uses `ShouldQueue` and `database` channel.
-- Notification payload uses primitive fields (`booking_id`, `event_title`, `ticket_type`, `quantity`).
-- Tests assert notification behavior using `Notification::fake()` and queue dispatch checks using `Queue::fake()`.
+## Queue and Notifications
+- Booking confirmation notification implements `ShouldQueue`.
+- Notification channel: `database`.
+- Payload uses primitive fields (`booking_id`, `event_title`, `ticket_type`, `quantity`).
+- Tests assert queue/notification behavior with `Queue::fake()` and `Notification::fake()`.
 
-## Postman Usage Notes
-- All requests require `Accept: application/json`.
-- Authenticated requests require `Authorization: Bearer {{token}}`.
-- Token is auto-set after Postman login requests (collection test script).
-- Postman collection file: `postman_collection.json` (repo root).
-- Includes dedicated login requests for admin/organizer/customer demo users.
-
-## Run Order (Quick Review Flow)
-1. `php artisan migrate:fresh --seed`
-2. `php artisan test`
-3. `php artisan serve`
-4. Import `postman_collection.json` into Postman
-5. Run one login request to auto-set `{{token}}`, then run protected requests
+## Postman Usage
+- Include `Accept: application/json` on all requests.
+- Include `Authorization: Bearer {{token}}` on authenticated requests.
+- `postman_collection.json` is provided in repo root.
+- Collection includes login requests for admin/organizer/customer users.
+- Login request test script stores token for follow-up protected calls.
 
 ## Coverage (Optional)
 If Xdebug is installed:
