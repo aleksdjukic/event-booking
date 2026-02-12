@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\PaymentStoreRequest;
 use App\Models\Booking;
@@ -40,7 +41,11 @@ class PaymentController extends Controller
                 return $this->error('Booking not found.', 404);
             }
 
-            if ($request->user()->role === 'customer' && $booking->user_id !== $request->user()->id) {
+            $userRole = $request->user()->role instanceof Role
+                ? $request->user()->role->value
+                : (string) $request->user()->role;
+
+            if ($userRole === Role::CUSTOMER->value && $booking->user_id !== $request->user()->id) {
                 DB::rollBack();
 
                 return $this->error('Forbidden', 403);

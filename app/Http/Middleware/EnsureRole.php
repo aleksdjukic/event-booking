@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\Role;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,9 @@ class EnsureRole
             }
         }
 
-        if (! in_array((string) $user->role, $allowedRoles, true)) {
+        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
+
+        if (! in_array($userRole, $allowedRoles, true)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Forbidden',

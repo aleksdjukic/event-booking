@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\Role;
 use App\Models\Event;
 use App\Models\User;
 
@@ -19,24 +20,30 @@ class EventPolicy
 
     public function create(User $user): bool
     {
-        return in_array($user->role, ['admin', 'organizer'], true);
+        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
+
+        return in_array($userRole, [Role::ADMIN->value, Role::ORGANIZER->value], true);
     }
 
     public function update(User $user, Event $event): bool
     {
-        if ($user->role === 'admin') {
+        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
+
+        if ($userRole === Role::ADMIN->value) {
             return true;
         }
 
-        return $user->role === 'organizer' && $event->created_by === $user->id;
+        return $userRole === Role::ORGANIZER->value && $event->created_by === $user->id;
     }
 
     public function delete(User $user, Event $event): bool
     {
-        if ($user->role === 'admin') {
+        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
+
+        if ($userRole === Role::ADMIN->value) {
             return true;
         }
 
-        return $user->role === 'organizer' && $event->created_by === $user->id;
+        return $userRole === Role::ORGANIZER->value && $event->created_by === $user->id;
     }
 }

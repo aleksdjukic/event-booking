@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\Role;
 use App\Models\Booking;
 use App\Models\User;
 
@@ -9,16 +10,22 @@ class BookingPolicy
 {
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, ['admin', 'customer'], true);
+        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
+
+        return in_array($userRole, [Role::ADMIN->value, Role::CUSTOMER->value], true);
     }
 
     public function view(User $user, Booking $booking): bool
     {
-        return $user->role === 'admin' || $booking->user_id === $user->id;
+        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
+
+        return $userRole === Role::ADMIN->value || $booking->user_id === $user->id;
     }
 
     public function cancel(User $user, Booking $booking): bool
     {
-        return $user->role === 'admin' || $booking->user_id === $user->id;
+        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
+
+        return $userRole === Role::ADMIN->value || $booking->user_id === $user->id;
     }
 }

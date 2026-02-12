@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\BookingStoreRequest;
 use App\Models\Booking;
@@ -48,7 +49,11 @@ class BookingController extends Controller
 
         $query = Booking::query()->with(['ticket', 'payment']);
 
-        if ($request->user()->role === 'customer') {
+        $userRole = $request->user()->role instanceof Role
+            ? $request->user()->role->value
+            : (string) $request->user()->role;
+
+        if ($userRole === Role::CUSTOMER->value) {
             $query->where('user_id', $request->user()->id);
         }
 
