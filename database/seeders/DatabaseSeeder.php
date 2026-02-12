@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,41 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         fake()->seed(20260212);
+        $demoPassword = 'password123';
+
+        // Demo users (for quick Postman testing)
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Demo Admin',
+                'phone' => '0609990001',
+                'role' => 'admin',
+                'password' => Hash::make($demoPassword),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'organizer@example.com'],
+            [
+                'name' => 'Demo Organizer',
+                'phone' => '0609990002',
+                'role' => 'organizer',
+                'password' => Hash::make($demoPassword),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'customer@example.com'],
+            [
+                'name' => 'Demo Customer',
+                'phone' => '0609990003',
+                'role' => 'customer',
+                'password' => Hash::make($demoPassword),
+                'email_verified_at' => now(),
+            ]
+        );
 
         User::factory()
             ->count(2)

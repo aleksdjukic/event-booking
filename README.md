@@ -9,9 +9,14 @@ Core modules: Sanctum auth, RBAC, Events, Tickets, Bookings, Payments (mocked), 
 2. `cp .env.example .env`
 3. `php artisan key:generate`
 4. Configure database values in `.env` (local)
-5. `php artisan migrate:fresh --seed`
+5. `php artisan migrate:fresh --seed` (creates demo users automatically)
 6. `php artisan test`
 7. `php artisan serve`
+
+## Demo Users (Quick Testing)
+- `admin@example.com` / `password123`
+- `organizer@example.com` / `password123`
+- `customer@example.com` / `password123`
 
 ## API Endpoints (ALL under /api/v1)
 - `GET /api/v1/ping`
@@ -80,3 +85,8 @@ Status codes used:
 - Booking confirmation notification uses `ShouldQueue` and `database` channel.
 - Notification payload uses primitive fields (`booking_id`, `event_title`, `ticket_type`, `quantity`).
 - Tests assert notification behavior using `Notification::fake()`.
+
+## Postman Usage Notes
+- All requests require `Accept: application/json`.
+- Authenticated requests require `Authorization: Bearer {{token}}`.
+- Token is auto-set after Postman login requests (collection test script).
