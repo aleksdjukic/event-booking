@@ -18,6 +18,8 @@ Core modules: Sanctum auth, RBAC, Events, Tickets, Bookings, Payments (mocked), 
 - `organizer@example.com` / `password123`
 - `customer@example.com` / `password123`
 
+> Note: Besides these 3 demo users, seeding also creates the main skill-test dataset (admins/organizers/customers, events, tickets, bookings, payments).
+
 ## API Endpoints (ALL under /api/v1)
 - `GET /api/v1/ping`
 - `POST /api/v1/auth/register`
@@ -92,3 +94,14 @@ Status codes used:
 - Token is auto-set after Postman login requests (collection test script).
 - Postman collection file: `postman_collection.json` (repo root).
 - Includes dedicated login requests for admin/organizer/customer demo users.
+
+## Run Order (Quick Review Flow)
+1. `php artisan migrate:fresh --seed`
+2. `php artisan test`
+3. `php artisan serve`
+4. Import `postman_collection.json` into Postman
+5. Run one login request to auto-set `{{token}}`, then run protected requests
+
+## Coverage (Optional)
+If Xdebug is installed:
+- `XDEBUG_MODE=coverage php artisan test --coverage-text`
