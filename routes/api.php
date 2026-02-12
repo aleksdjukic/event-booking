@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\EventController;
+use App\Http\Controllers\Api\V1\PaymentController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Middleware\PreventDoubleBooking;
@@ -44,5 +45,7 @@ Route::prefix('v1')->group(function (): void {
     Route::middleware(['auth:sanctum', 'role:admin,customer'])->group(function (): void {
         Route::get('/bookings', [BookingController::class, 'index']);
         Route::put('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
+        Route::post('/bookings/{id}/payment', [PaymentController::class, 'store']);
+        Route::get('/payments/{id}', [PaymentController::class, 'show']);
     });
 });

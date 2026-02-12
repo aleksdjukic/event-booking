@@ -13,7 +13,7 @@ class EnsureRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $roles): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         $user = $request->user();
 
@@ -22,10 +22,12 @@ class EnsureRole
         }
 
         $allowedRoles = [];
-        foreach (explode(',', $roles) as $role) {
-            $role = trim($role);
-            if ($role !== '') {
-                $allowedRoles[] = $role;
+        foreach ($roles as $roleGroup) {
+            foreach (explode(',', $roleGroup) as $role) {
+                $role = trim($role);
+                if ($role !== '') {
+                    $allowedRoles[] = $role;
+                }
             }
         }
 
