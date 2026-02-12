@@ -7,8 +7,10 @@ Core modules: Sanctum auth, RBAC, Events, Tickets, Bookings, Payments (mocked), 
 ## Setup
 1. `composer install`
 2. `cp .env.example .env`
-3. `php artisan key:generate`
-4. Configure database values in `.env` (local)
+3. Create SQLite file:
+   - macOS/Linux: `touch database/database.sqlite`
+   - Windows: create `database/database.sqlite` manually
+4. `php artisan key:generate`
 5. `php artisan migrate:fresh --seed` (creates demo users automatically)
 6. `php artisan test`
 7. `php artisan serve`
