@@ -18,7 +18,12 @@ class EnsureRole
         $user = $request->user();
 
         if ($user === null) {
-            abort(401, 'Unauthorized');
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+                'data' => null,
+                'errors' => null,
+            ], 401);
         }
 
         $allowedRoles = [];
@@ -32,7 +37,12 @@ class EnsureRole
         }
 
         if (! in_array((string) $user->role, $allowedRoles, true)) {
-            abort(403, 'Forbidden');
+            return response()->json([
+                'success' => false,
+                'message' => 'Forbidden',
+                'data' => null,
+                'errors' => null,
+            ], 403);
         }
 
         return $next($request);
