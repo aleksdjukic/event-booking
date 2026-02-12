@@ -6,8 +6,10 @@ use App\Models\Booking;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Notifications\BookingConfirmedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -17,6 +19,8 @@ class PaymentTest extends TestCase
 
     public function test_customer_can_pay_pending_booking_successfully(): void
     {
+        Notification::fake();
+
         $customer = new User();
         $customer->name = 'Customer';
         $customer->email = 'customer.payment@example.com';
@@ -78,5 +82,7 @@ class PaymentTest extends TestCase
             'id' => $ticket->id,
             'quantity' => 8,
         ]);
+
+        Notification::assertSentTo($customer, BookingConfirmedNotification::class);
     }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\PaymentStoreRequest;
 use App\Models\Booking;
+use App\Models\Event;
 use App\Models\Payment;
 use App\Models\Ticket;
+use App\Notifications\BookingConfirmedNotification;
 use App\Services\PaymentService;
 use App\Support\Http\ApiResponse;
 use Illuminate\Database\QueryException;
@@ -25,6 +27,7 @@ class PaymentController extends Controller
     public function store(int $id, PaymentStoreRequest $request): JsonResponse
     {
         $forceSuccess = $request->boolean('force_success', true);
+        $notificationPayload = null;
 
         DB::beginTransaction();
 
@@ -80,6 +83,13 @@ class PaymentController extends Controller
                 $booking->status = 'confirmed';
                 $booking->save();
 
+                $notificationPayload = [
+                    'booking_id' => $booking->id,
+                    'event_title' => Event::query()->whereKey($ticket->event_id)->value('title'),
+                    'ticket_type' => $ticket->type,
+                    'quantity' => (int) $booking->quantity,
+                ];
+
                 $payment = new Payment();
                 $payment->booking_id = $booking->id;
                 $payment->amount = $amount;
@@ -97,6 +107,16 @@ class PaymentController extends Controller
             }
 
             DB::commit();
+
+            if ($payment->status === 'success' && is_array($notificationPayload)) {
+                $booking->load('user');
+                $booking->user?->notify(new BookingConfirmedNotification(
+                    $notificationPayload['booking_id'],
+                    $notificationPayload['event_title'],
+                    $notificationPayload['ticket_type'],
+                    $notificationPayload['quantity'],
+                ));
+            }
 
             return $this->created($payment->load('booking'), 'Payment processed successfully');
         } catch (QueryException $exception) {
