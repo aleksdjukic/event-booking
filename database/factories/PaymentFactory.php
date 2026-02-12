@@ -1,0 +1,25 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Payment>
+ */
+class PaymentFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'booking_id' => fake()->unique()->numberBetween(1, 1000000),
+            'amount' => number_format(fake()->randomFloat(2, 10, 500), 2, '.', ''),
+            'status' => fake()->randomElement(['success', 'failed', 'refunded']),
+        ];
+    }
+}
