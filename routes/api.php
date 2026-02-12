@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\UserController;
 
 Route::prefix('v1')->group(function (): void {
@@ -15,6 +16,8 @@ Route::prefix('v1')->group(function (): void {
 
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
+    Route::get('/events', [EventController::class, 'index']);
+    Route::get('/events/{id}', [EventController::class, 'show']);
 
     Route::middleware('auth:sanctum')->group(function (): void {
         Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -22,7 +25,11 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::middleware(['auth:sanctum', 'role:admin,organizer'])->group(function (): void {
-        // Event/Ticket write routes will be added in the next steps.
+        Route::post('/events', [EventController::class, 'store']);
+        Route::put('/events/{id}', [EventController::class, 'update']);
+        Route::delete('/events/{id}', [EventController::class, 'destroy']);
+
+        // Ticket write routes will be added in the next steps.
     });
 
     Route::middleware(['auth:sanctum', 'role:admin,customer'])->group(function (): void {
