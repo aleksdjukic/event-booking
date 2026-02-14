@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique('booking_id');
+            $table->index('status');
         });
     }
 

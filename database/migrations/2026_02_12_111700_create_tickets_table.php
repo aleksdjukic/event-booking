@@ -20,10 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['event_id', 'type']);
-        });
-
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->foreign('ticket_id')->references('id')->on('tickets')->cascadeOnDelete();
+            $table->index('event_id');
         });
     }
 
@@ -32,10 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->dropForeign(['ticket_id']);
-        });
-
         Schema::dropIfExists('tickets');
     }
 };
