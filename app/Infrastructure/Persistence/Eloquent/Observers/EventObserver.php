@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace App\Infrastructure\Persistence\Eloquent\Observers;
 
 use App\Domain\Event\Models\Event;
 use Illuminate\Support\Facades\Cache;

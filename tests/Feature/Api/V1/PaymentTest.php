@@ -6,7 +6,7 @@ use App\Domain\Booking\Models\Booking;
 use App\Domain\Event\Models\Event;
 use App\Domain\Ticket\Models\Ticket;
 use App\Domain\User\Models\User;
-use App\Notifications\BookingConfirmedNotification;
+use App\Infrastructure\Notifications\Booking\BookingConfirmedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;

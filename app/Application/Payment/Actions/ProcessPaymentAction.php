@@ -20,7 +20,7 @@ use App\Domain\Payment\Models\Payment;
 use App\Domain\Payment\Models\PaymentIdempotencyKey;
 use App\Domain\Ticket\Models\Ticket;
 use App\Domain\User\Models\User;
-use App\Notifications\BookingConfirmedNotification;
+use App\Infrastructure\Notifications\Booking\BookingConfirmedNotification;
 use App\Infrastructure\Payment\PaymentGatewayService;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;

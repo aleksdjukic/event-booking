@@ -13,7 +13,7 @@ use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
 use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
 use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
 use App\Domain\Event\Models\Event;
-use App\Observers\EventObserver;
+use App\Infrastructure\Persistence\Eloquent\Observers\EventObserver;
 use App\Infrastructure\Persistence\Eloquent\BookingRepository;
 use App\Application\Services\Auth\AuthService;
 use App\Application\Services\Booking\BookingService;
