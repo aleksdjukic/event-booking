@@ -2,11 +2,12 @@
 
 namespace App\Services\Booking;
 
+use App\Domain\Shared\DomainError;
+use App\Domain\Shared\DomainException;
 use App\Enums\Role;
 use App\Models\Booking;
 use App\Models\Ticket;
 use App\Models\User;
-use App\Services\Support\ServiceException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookingService
@@ -19,16 +20,16 @@ class BookingService
         $ticket = Ticket::query()->find($ticketId);
 
         if ($ticket === null) {
-            throw new ServiceException('Ticket not found.', 404);
+            throw new DomainException(DomainError::TICKET_NOT_FOUND);
         }
 
         if ($ticket->quantity <= 0) {
-            throw new ServiceException('Ticket is sold out.', 409);
+            throw new DomainException(DomainError::TICKET_SOLD_OUT);
         }
 
         $quantity = (int) $data['quantity'];
         if ($quantity > $ticket->quantity) {
-            throw new ServiceException('Not enough ticket inventory.', 409);
+            throw new DomainException(DomainError::NOT_ENOUGH_TICKET_INVENTORY);
         }
 
         $booking = new Booking();
@@ -53,15 +54,21 @@ class BookingService
         return $query->paginate();
     }
 
-    public function find(int $id): ?Booking
+    public function findOrFail(int $id): Booking
     {
-        return Booking::query()->find($id);
+        $booking = Booking::query()->find($id);
+
+        if ($booking === null) {
+            throw new DomainException(DomainError::BOOKING_NOT_FOUND);
+        }
+
+        return $booking;
     }
 
     public function cancel(Booking $booking): Booking
     {
         if ($booking->status !== 'pending') {
-            throw new ServiceException('Only pending bookings can be cancelled.', 409);
+            throw new DomainException(DomainError::BOOKING_NOT_PENDING);
         }
 
         $booking->status = 'cancelled';

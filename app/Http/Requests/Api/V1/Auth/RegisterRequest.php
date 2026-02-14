@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests\Api\V1\Auth;
 
-use App\Enums\Role;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 
 class RegisterRequest extends FormRequest
 {
@@ -24,7 +22,6 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['nullable', 'string', 'max:255'],
-            'role' => ['nullable', new Enum(Role::class)],
         ];
     }
 }

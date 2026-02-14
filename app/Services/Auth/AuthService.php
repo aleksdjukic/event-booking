@@ -18,7 +18,7 @@ class AuthService
         $user->name = (string) $data['name'];
         $user->email = (string) $data['email'];
         $user->phone = isset($data['phone']) ? (string) $data['phone'] : null;
-        $user->role = isset($data['role']) ? (string) $data['role'] : Role::CUSTOMER->value;
+        $user->role = Role::CUSTOMER->value;
         $user->password = Hash::make((string) $data['password']);
         $user->save();
 

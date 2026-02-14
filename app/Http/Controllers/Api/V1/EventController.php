@@ -30,10 +30,6 @@ class EventController extends Controller
     {
         $event = $this->eventService->show($id);
 
-        if ($event === null) {
-            return $this->error('Event not found.', 404);
-        }
-
         return $this->success($event, 'OK');
     }
 
@@ -48,11 +44,7 @@ class EventController extends Controller
 
     public function update(EventUpdateRequest $request, int $id): JsonResponse
     {
-        $event = Event::query()->find($id);
-
-        if ($event === null) {
-            return $this->error('Event not found.', 404);
-        }
+        $event = $this->eventService->findOrFail($id);
 
         $this->authorize('update', $event);
 
@@ -63,11 +55,7 @@ class EventController extends Controller
 
     public function destroy(int $id): JsonResponse
     {
-        $event = Event::query()->find($id);
-
-        if ($event === null) {
-            return $this->error('Event not found.', 404);
-        }
+        $event = $this->eventService->findOrFail($id);
 
         $this->authorize('delete', $event);
 

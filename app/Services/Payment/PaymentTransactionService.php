@@ -2,6 +2,8 @@
 
 namespace App\Services\Payment;
 
+use App\Domain\Shared\DomainError;
+use App\Domain\Shared\DomainException;
 use App\Enums\Role;
 use App\Models\Booking;
 use App\Models\Event;
@@ -9,7 +11,6 @@ use App\Models\Payment;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Notifications\BookingConfirmedNotification;
-use App\Services\Support\ServiceException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
@@ -19,9 +20,15 @@ class PaymentTransactionService
     {
     }
 
-    public function find(int $id): ?Payment
+    public function findOrFail(int $id): Payment
     {
-        return Payment::query()->with('booking')->find($id);
+        $payment = Payment::query()->with('booking')->find($id);
+
+        if ($payment === null) {
+            throw new DomainException(DomainError::PAYMENT_NOT_FOUND);
+        }
+
+        return $payment;
     }
 
     public function process(User $user, int $bookingId, ?bool $forceSuccess = null): Payment
@@ -34,7 +41,7 @@ class PaymentTransactionService
             $booking = Booking::query()->whereKey($bookingId)->lockForUpdate()->first();
 
             if ($booking === null) {
-                throw new ServiceException('Booking not found.', 404);
+                throw new DomainException(DomainError::BOOKING_NOT_FOUND);
             }
 
             $this->ensureCanProcess($user, $booking);
@@ -43,7 +50,7 @@ class PaymentTransactionService
             $ticket = Ticket::query()->whereKey($booking->ticket_id)->lockForUpdate()->first();
 
             if ($ticket === null) {
-                throw new ServiceException('Ticket not found.', 404);
+                throw new DomainException(DomainError::TICKET_NOT_FOUND);
             }
 
             $this->ensureInventory($booking, $ticket);
@@ -90,14 +97,14 @@ class PaymentTransactionService
             }
 
             return $payment->load('booking');
-        } catch (ServiceException $exception) {
+        } catch (DomainException $exception) {
             DB::rollBack();
             throw $exception;
         } catch (QueryException $exception) {
             DB::rollBack();
 
             if ($this->isDuplicatePaymentException($exception)) {
-                throw new ServiceException('Payment already exists for this booking.', 409);
+                throw new DomainException(DomainError::PAYMENT_ALREADY_EXISTS);
             }
 
             throw $exception;
@@ -112,30 +119,30 @@ class PaymentTransactionService
         $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
 
         if ($userRole === Role::CUSTOMER->value && $booking->user_id !== $user->id) {
-            throw new ServiceException('Forbidden', 403);
+            throw new DomainException(DomainError::FORBIDDEN);
         }
     }
 
     private function ensureBookingCanBePaid(Booking $booking): void
     {
         if ($booking->status !== 'pending') {
-            throw new ServiceException('Invalid booking state for payment.', 409);
+            throw new DomainException(DomainError::INVALID_BOOKING_STATE_FOR_PAYMENT);
         }
 
         $paymentExists = Payment::query()->where('booking_id', $booking->id)->exists();
         if ($paymentExists) {
-            throw new ServiceException('Payment already exists for this booking.', 409);
+            throw new DomainException(DomainError::PAYMENT_ALREADY_EXISTS);
         }
     }
 
     private function ensureInventory(Booking $booking, Ticket $ticket): void
     {
         if ($ticket->quantity <= 0) {
-            throw new ServiceException('Ticket is sold out.', 409);
+            throw new DomainException(DomainError::TICKET_SOLD_OUT);
         }
 
         if ($booking->quantity > $ticket->quantity) {
-            throw new ServiceException('Not enough ticket inventory.', 409);
+            throw new DomainException(DomainError::NOT_ENOUGH_TICKET_INVENTORY);
         }
     }
 

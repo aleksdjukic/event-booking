@@ -28,6 +28,22 @@ class AuthFeatureTest extends TestCase
             ->assertJsonPath('data.user.email', 'auth.register@example.com');
     }
 
+    public function test_register_ignores_role_and_always_creates_customer(): void
+    {
+        $response = $this->postJson('/api/v1/auth/register', [
+            'name' => 'Auth User Role',
+            'email' => 'auth.register.role@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'phone' => '0601234567',
+            'role' => 'admin',
+        ]);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.user.role', 'customer');
+    }
+
     public function test_login_returns_token(): void
     {
         $user = new User();

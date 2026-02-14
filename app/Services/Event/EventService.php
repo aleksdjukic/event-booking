@@ -2,6 +2,8 @@
 
 namespace App\Services\Event;
 
+use App\Domain\Shared\DomainError;
+use App\Domain\Shared\DomainException;
 use App\Models\Event;
 use App\Models\User;
 use App\Support\Traits\CommonQueryScopes;
@@ -39,9 +41,26 @@ class EventService
         return $eventQuery->paginate();
     }
 
-    public function show(int $id): ?Event
+    public function show(int $id): Event
     {
-        return Event::query()->with('tickets')->find($id);
+        $event = Event::query()->with('tickets')->find($id);
+
+        if ($event === null) {
+            throw new DomainException(DomainError::EVENT_NOT_FOUND);
+        }
+
+        return $event;
+    }
+
+    public function findOrFail(int $id): Event
+    {
+        $event = Event::query()->find($id);
+
+        if ($event === null) {
+            throw new DomainException(DomainError::EVENT_NOT_FOUND);
+        }
+
+        return $event;
     }
 
     /**

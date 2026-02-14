@@ -2,21 +2,34 @@
 
 namespace App\Services\Ticket;
 
+use App\Domain\Shared\DomainError;
+use App\Domain\Shared\DomainException;
 use App\Models\Event;
 use App\Models\Ticket;
-use App\Services\Support\ServiceException;
 use Illuminate\Support\Facades\Cache;
 
 class TicketService
 {
-    public function findEvent(int $eventId): ?Event
+    public function findEventOrFail(int $eventId): Event
     {
-        return Event::query()->find($eventId);
+        $event = Event::query()->find($eventId);
+
+        if ($event === null) {
+            throw new DomainException(DomainError::EVENT_NOT_FOUND);
+        }
+
+        return $event;
     }
 
-    public function findTicket(int $id): ?Ticket
+    public function findTicketOrFail(int $id): Ticket
     {
-        return Ticket::query()->find($id);
+        $ticket = Ticket::query()->find($id);
+
+        if ($ticket === null) {
+            throw new DomainException(DomainError::TICKET_NOT_FOUND);
+        }
+
+        return $ticket;
     }
 
     /**
@@ -30,7 +43,7 @@ class TicketService
             ->exists();
 
         if ($duplicateTypeExists) {
-            throw new ServiceException('Ticket type already exists for this event.', 409);
+            throw new DomainException(DomainError::DUPLICATE_TICKET_TYPE);
         }
 
         $ticket = new Ticket();
@@ -58,7 +71,7 @@ class TicketService
             ->exists();
 
         if ($duplicateTypeExists) {
-            throw new ServiceException('Ticket type already exists for this event.', 409);
+            throw new DomainException(DomainError::DUPLICATE_TICKET_TYPE);
         }
 
         if (array_key_exists('type', $data)) {
