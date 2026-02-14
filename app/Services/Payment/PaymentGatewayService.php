@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Payment;
 
 use App\Models\Booking;
 
-class PaymentService
+class PaymentGatewayService
 {
     private const SIMULATED_SUCCESS_RATE = 80;
 

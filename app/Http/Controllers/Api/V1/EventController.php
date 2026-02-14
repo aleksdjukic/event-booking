@@ -7,50 +7,28 @@ use App\Http\Requests\Api\V1\Event\EventIndexRequest;
 use App\Http\Requests\Api\V1\Event\EventStoreRequest;
 use App\Http\Requests\Api\V1\Event\EventUpdateRequest;
 use App\Models\Event;
+use App\Services\Event\EventService;
 use App\Support\Http\ApiResponse;
-use App\Support\Traits\CommonQueryScopes;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
 
 class EventController extends Controller
 {
     use ApiResponse;
-    use CommonQueryScopes;
+
+    public function __construct(private readonly EventService $eventService)
+    {
+    }
 
     public function index(EventIndexRequest $request): JsonResponse
     {
-        $page = (int) $request->query('page', 1);
-        $queryKeys = array_keys($request->query());
-        $nonCacheableKeys = array_diff($queryKeys, ['page']);
-
-        if ($nonCacheableKeys === []) {
-            $version = Cache::get('events:index:version', 1);
-            $cacheKey = 'events:index:v'.$version.':page:'.max(1, $page);
-            $events = Cache::remember($cacheKey, 120, function () use ($request) {
-                return Event::query()->paginate();
-            });
-
-            return $this->success($events, 'OK');
-        }
-
-        $query = Event::query();
-
-        $this->searchByTitle($query, $request->query('search'));
-        $this->filterByDate($query, $request->query('date'));
-
-        $location = $request->query('location');
-        if (is_string($location) && $location !== '') {
-            $query->where('location', 'like', '%'.$location.'%');
-        }
-
-        $events = $query->paginate();
+        $events = $this->eventService->index($request->validated());
 
         return $this->success($events, 'OK');
     }
 
     public function show(int $id): JsonResponse
     {
-        $event = Event::query()->with('tickets')->find($id);
+        $event = $this->eventService->show($id);
 
         if ($event === null) {
             return $this->error('Event not found.', 404);
@@ -63,15 +41,7 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        $validated = $request->validated();
-
-        $event = new Event();
-        $event->title = $validated['title'];
-        $event->description = $validated['description'] ?? null;
-        $event->date = $validated['date'];
-        $event->location = $validated['location'];
-        $event->created_by = $request->user()->id;
-        $event->save();
+        $event = $this->eventService->create($request->user(), $request->validated());
 
         return $this->created($event, 'Event created successfully');
     }
@@ -86,13 +56,7 @@ class EventController extends Controller
 
         $this->authorize('update', $event);
 
-        $validated = $request->validated();
-
-        $event->title = $validated['title'];
-        $event->description = $validated['description'] ?? null;
-        $event->date = $validated['date'];
-        $event->location = $validated['location'];
-        $event->save();
+        $event = $this->eventService->update($event, $request->validated());
 
         return $this->success($event, 'Event updated successfully');
     }
@@ -107,7 +71,7 @@ class EventController extends Controller
 
         $this->authorize('delete', $event);
 
-        $event->delete();
+        $this->eventService->delete($event);
 
         return $this->success(null, 'Event deleted successfully');
     }
