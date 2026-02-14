@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Api\V1;
+namespace App\Http\Resources\Api\V1\Ticket;
 
 use App\Domain\Ticket\Models\Ticket;
 use Illuminate\Http\Request;

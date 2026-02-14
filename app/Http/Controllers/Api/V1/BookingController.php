@@ -6,7 +6,7 @@ use App\Application\Contracts\Services\BookingServiceInterface;
 use App\Application\Booking\DTO\CreateBookingData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Booking\BookingStoreRequest;
-use App\Http\Resources\Api\V1\BookingResource;
+use App\Http\Resources\Api\V1\Booking\BookingResource;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Ticket\Models\Ticket;
 use App\Support\Http\ApiResponder;

@@ -6,7 +6,7 @@ use App\Application\Contracts\Services\PaymentTransactionServiceInterface;
 use App\Application\Payment\DTO\ProcessPaymentData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Payment\PaymentStoreRequest;
-use App\Http\Resources\Api\V1\PaymentResource;
+use App\Http\Resources\Api\V1\Payment\PaymentResource;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Models\Payment;
 use App\Support\Http\ApiResponder;

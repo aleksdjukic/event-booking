@@ -8,7 +8,7 @@ use App\Application\Auth\DTO\RegisterData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Auth\LoginRequest;
 use App\Http\Requests\Api\V1\Auth\RegisterRequest;
-use App\Http\Resources\Api\V1\UserResource;
+use App\Http\Resources\Api\V1\User\UserResource;
 use App\Support\Http\ApiResponder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

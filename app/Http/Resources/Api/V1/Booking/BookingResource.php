@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Api\V1;
+namespace App\Http\Resources\Api\V1\Booking;
 
 use App\Domain\Booking\Enums\BookingStatus;
 use App\Domain\Booking\Models\Booking;
+use App\Http\Resources\Api\V1\Payment\PaymentResource;
+use App\Http\Resources\Api\V1\Ticket\TicketResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

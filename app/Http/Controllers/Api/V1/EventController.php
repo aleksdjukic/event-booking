@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Event\EventIndexRequest;
 use App\Http\Requests\Api\V1\Event\EventStoreRequest;
 use App\Http\Requests\Api\V1\Event\EventUpdateRequest;
-use App\Http\Resources\Api\V1\EventResource;
+use App\Http\Resources\Api\V1\Event\EventResource;
 use App\Domain\Event\Models\Event;
 use App\Support\Http\ApiResponder;
 use Illuminate\Http\JsonResponse;

@@ -8,7 +8,7 @@ use App\Application\Ticket\DTO\UpdateTicketData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Ticket\TicketStoreRequest;
 use App\Http\Requests\Api\V1\Ticket\TicketUpdateRequest;
-use App\Http\Resources\Api\V1\TicketResource;
+use App\Http\Resources\Api\V1\Ticket\TicketResource;
 use App\Domain\Event\Models\Event;
 use App\Domain\Ticket\Models\Ticket;
 use App\Support\Http\ApiResponder;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Api\V1;
+namespace App\Http\Resources\Api\V1\User;
 
 use App\Domain\User\Enums\Role;
 use App\Domain\User\Models\User;

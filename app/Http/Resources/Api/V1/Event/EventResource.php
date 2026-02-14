@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Resources\Api\V1;
+namespace App\Http\Resources\Api\V1\Event;
 
 use App\Domain\Event\Models\Event;
+use App\Http\Resources\Api\V1\Ticket\TicketResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
