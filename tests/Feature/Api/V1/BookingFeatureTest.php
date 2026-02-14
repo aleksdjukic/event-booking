@@ -117,9 +117,11 @@ class BookingFeatureTest extends TestCase
             ->assertStatus(409)
             ->assertJsonPath('success', false);
 
+        $secondTicket = $this->createTicket(10);
+
         $adminPendingBooking = new Booking();
         $adminPendingBooking->user_id = $customer->id;
-        $adminPendingBooking->ticket_id = $ticket->id;
+        $adminPendingBooking->ticket_id = $secondTicket->id;
         $adminPendingBooking->quantity = 1;
         $adminPendingBooking->status = 'pending';
         $adminPendingBooking->save();

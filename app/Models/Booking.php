@@ -9,9 +9,23 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property BookingStatus|string $status
+ * @property string|null $active_booking_key
  */
 class Booking extends Model
 {
+    protected static function booted(): void
+    {
+        static::saving(function (Booking $booking): void {
+            $status = $booking->status instanceof BookingStatus
+                ? $booking->status
+                : BookingStatus::from((string) $booking->status);
+
+            $booking->active_booking_key = $status->isActive()
+                ? ((int) $booking->user_id).':'.((int) $booking->ticket_id)
+                : null;
+        });
+    }
+
     protected function casts(): array
     {
         return [
