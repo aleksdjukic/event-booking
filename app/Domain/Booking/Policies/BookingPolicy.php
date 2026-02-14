@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace App\Domain\Booking\Policies;
 
 use App\Enums\Role;
 use App\Models\Booking;

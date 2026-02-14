@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace App\Domain\Payment\Policies;
 
 use App\Enums\Role;
 use App\Models\Payment;
