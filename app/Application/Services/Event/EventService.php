@@ -3,12 +3,15 @@
 namespace App\Application\Services\Event;
 
 use App\Application\Contracts\Services\EventServiceInterface;
-use App\Domain\Event\Repositories\EventRepositoryInterface;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Application\Event\Actions\CreateEventAction;
+use App\Application\Event\Actions\DeleteEventAction;
+use App\Application\Event\Actions\UpdateEventAction;
 use App\Application\Event\DTO\CreateEventData;
 use App\Application\Event\DTO\ListEventsData;
 use App\Application\Event\DTO\UpdateEventData;
+use App\Domain\Event\Repositories\EventRepositoryInterface;
+use App\Domain\Shared\DomainError;
+use App\Domain\Shared\DomainException;
 use App\Domain\Event\Models\Event;
 use App\Domain\User\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,8 +19,12 @@ use Illuminate\Support\Facades\Cache;
 
 class EventService implements EventServiceInterface
 {
-    public function __construct(private readonly EventRepositoryInterface $eventRepository)
-    {
+    public function __construct(
+        private readonly EventRepositoryInterface $eventRepository,
+        private readonly CreateEventAction $createEventAction,
+        private readonly UpdateEventAction $updateEventAction,
+        private readonly DeleteEventAction $deleteEventAction,
+    ) {
     }
 
     /**
@@ -69,16 +76,16 @@ class EventService implements EventServiceInterface
 
     public function create(User $user, CreateEventData $data): Event
     {
-        return $this->eventRepository->create($user, $data);
+        return $this->createEventAction->execute($user, $data);
     }
 
     public function update(Event $event, UpdateEventData $data): Event
     {
-        return $this->eventRepository->update($event, $data);
+        return $this->updateEventAction->execute($event, $data);
     }
 
     public function delete(Event $event): void
     {
-        $this->eventRepository->delete($event);
+        $this->deleteEventAction->execute($event);
     }
 }
