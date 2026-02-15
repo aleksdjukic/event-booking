@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\V1\Event\EventController;
 use App\Http\Controllers\Api\V1\Payment\PaymentController;
 use App\Http\Controllers\Api\V1\Ticket\TicketController;
 use App\Http\Controllers\Api\V1\User\UserController;
-use App\Http\Middleware\PreventDoubleBooking;
 
 Route::prefix('v1')->group(function (): void {
     Route::get('/ping', function () {
@@ -39,8 +38,7 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::middleware(['auth:sanctum', 'role:customer'])->group(function (): void {
-        Route::post('/tickets/{ticket}/bookings', [BookingController::class, 'store'])
-            ->middleware(PreventDoubleBooking::class);
+        Route::post('/tickets/{ticket}/bookings', [BookingController::class, 'store']);
     });
 
     Route::middleware(['auth:sanctum', 'role:admin,customer'])->group(function (): void {
