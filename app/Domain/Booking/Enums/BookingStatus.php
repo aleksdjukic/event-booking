@@ -12,4 +12,12 @@ enum BookingStatus: string
     {
         return in_array($this, [self::PENDING, self::CONFIRMED], true);
     }
+
+    /**
+     * @return array<int, string>
+     */
+    public static function values(): array
+    {
+        return array_map(static fn (self $status): string => $status->value, self::cases());
+    }
 }

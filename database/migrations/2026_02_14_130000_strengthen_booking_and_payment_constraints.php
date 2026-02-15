@@ -107,18 +107,12 @@ return new class extends Migration
 
     private function bookingStatusesSqlList(): string
     {
-        return $this->asSqlInList(array_map(
-            static fn (BookingStatus $status): string => $status->value,
-            BookingStatus::cases(),
-        ));
+        return $this->asSqlInList(BookingStatus::values());
     }
 
     private function paymentStatusesSqlList(): string
     {
-        return $this->asSqlInList(array_map(
-            static fn (PaymentStatus $status): string => $status->value,
-            PaymentStatus::cases(),
-        ));
+        return $this->asSqlInList(PaymentStatus::values());
     }
 
     /**
