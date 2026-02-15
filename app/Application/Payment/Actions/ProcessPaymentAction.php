@@ -2,9 +2,7 @@
 
 namespace App\Application\Payment\Actions;
 
-use App\Domain\Booking\BookingTransitionGuard;
 use App\Domain\Booking\Repositories\BookingRepositoryInterface;
-use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
 use App\Domain\Payment\PaymentTransitionGuard;
 use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
 use App\Domain\Shared\DomainError;
@@ -13,11 +11,7 @@ use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
 use App\Application\Payment\DTO\CreatePaymentData;
 use App\Domain\Booking\Enums\BookingStatus;
 use App\Domain\Payment\Enums\PaymentStatus;
-use App\Domain\User\Enums\Role;
-use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Models\Payment;
-use App\Domain\Payment\Models\PaymentIdempotencyKey;
-use App\Domain\Ticket\Models\Ticket;
 use App\Domain\User\Models\User;
 use App\Infrastructure\Notifications\Booking\BookingConfirmedNotification;
 use App\Infrastructure\Payment\PaymentGatewayService;
@@ -28,18 +22,21 @@ class ProcessPaymentAction
 {
     public function __construct(
         private readonly PaymentGatewayService $gatewayService,
-        private readonly BookingTransitionGuard $bookingTransitionGuard,
         private readonly PaymentTransitionGuard $paymentTransitionGuard,
         private readonly BookingRepositoryInterface $bookingRepository,
         private readonly TicketRepositoryInterface $ticketRepository,
         private readonly PaymentRepositoryInterface $paymentRepository,
-        private readonly PaymentIdempotencyRepositoryInterface $idempotencyRepository,
+        private readonly ResolvePaymentIdempotencyAction $resolvePaymentIdempotencyAction,
+        private readonly AttachPaymentToIdempotencyRecordAction $attachPaymentToIdempotencyRecordAction,
+        private readonly AuthorizeBookingPaymentAction $authorizeBookingPaymentAction,
+        private readonly EnsureBookingPayableAction $ensureBookingPayableAction,
+        private readonly EnsureTicketInventoryForBookingAction $ensureTicketInventoryForBookingAction,
     ) {
     }
 
     public function execute(User $user, CreatePaymentData $data): Payment
     {
-        $idempotencyRecord = $this->resolveIdempotencyRecord($user, $data);
+        $idempotencyRecord = $this->resolvePaymentIdempotencyAction->execute($user, $data);
         if ($idempotencyRecord?->payment_id !== null) {
             $existingPayment = $this->paymentRepository->findWithBooking((int) $idempotencyRecord->payment_id);
 
@@ -59,8 +56,8 @@ class ProcessPaymentAction
                 throw new DomainException(DomainError::BOOKING_NOT_FOUND);
             }
 
-            $this->ensureCanProcess($user, $booking);
-            $this->ensureBookingCanBePaid($booking);
+            $this->authorizeBookingPaymentAction->execute($user, $booking);
+            $this->ensureBookingPayableAction->execute($booking);
 
             $ticket = $this->ticketRepository->findForUpdateWithEvent($booking->ticket_id);
 
@@ -68,7 +65,7 @@ class ProcessPaymentAction
                 throw new DomainException(DomainError::TICKET_NOT_FOUND);
             }
 
-            $this->ensureInventory($booking, $ticket);
+            $this->ensureTicketInventoryForBookingAction->execute($booking, $ticket);
 
             $amount = round(((float) $ticket->price) * (int) $booking->quantity, 2);
             $processed = $this->gatewayService->process($booking, $data->forceSuccess);
@@ -96,7 +93,7 @@ class ProcessPaymentAction
 
             $payment = $this->paymentRepository->create($booking, $amount, $paymentStatus);
             if ($idempotencyRecord !== null) {
-                $this->idempotencyRepository->attachPayment($idempotencyRecord, (int) $payment->id);
+                $this->attachPaymentToIdempotencyRecordAction->execute($idempotencyRecord, (int) $payment->id);
             }
             DB::commit();
 
@@ -132,41 +129,6 @@ class ProcessPaymentAction
         }
     }
 
-    private function ensureCanProcess(User $user, Booking $booking): void
-    {
-        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
-
-        if ($userRole === Role::CUSTOMER->value && $booking->user_id !== $user->id) {
-            throw new DomainException(DomainError::FORBIDDEN);
-        }
-    }
-
-    private function ensureBookingCanBePaid(Booking $booking): void
-    {
-        $bookingStatus = $booking->status instanceof BookingStatus
-            ? $booking->status
-            : BookingStatus::from((string) $booking->status);
-
-        if (! $this->bookingTransitionGuard->canPay($bookingStatus)) {
-            throw new DomainException(DomainError::INVALID_BOOKING_STATE_FOR_PAYMENT);
-        }
-
-        if ($this->paymentRepository->existsForBooking($booking->id)) {
-            throw new DomainException(DomainError::PAYMENT_ALREADY_EXISTS);
-        }
-    }
-
-    private function ensureInventory(Booking $booking, Ticket $ticket): void
-    {
-        if ($ticket->quantity <= 0) {
-            throw new DomainException(DomainError::TICKET_SOLD_OUT);
-        }
-
-        if ($booking->quantity > $ticket->quantity) {
-            throw new DomainException(DomainError::NOT_ENOUGH_TICKET_INVENTORY);
-        }
-    }
-
     private function isDuplicatePaymentException(QueryException $exception): bool
     {
         $message = strtolower($exception->getMessage());
@@ -181,28 +143,5 @@ class ProcessPaymentAction
         $hasUniqueHint = str_contains($message, 'unique') || str_contains($message, 'duplicate');
 
         return $hasBookingIdColumn && $hasUniqueHint;
-    }
-
-    private function resolveIdempotencyRecord(User $user, CreatePaymentData $data): ?PaymentIdempotencyKey
-    {
-        if ($data->idempotencyKey === null) {
-            return null;
-        }
-
-        $record = $this->idempotencyRepository->findForUserByKey($user->id, $data->idempotencyKey);
-        if ($record !== null) {
-            if ((int) $record->booking_id !== $data->bookingId) {
-                throw new DomainException(DomainError::IDEMPOTENCY_KEY_REUSED);
-            }
-
-            return $record;
-        }
-
-        $createdRecord = $this->idempotencyRepository->createPending($user->id, $data->bookingId, $data->idempotencyKey);
-        if ((int) $createdRecord->booking_id !== $data->bookingId) {
-            throw new DomainException(DomainError::IDEMPOTENCY_KEY_REUSED);
-        }
-
-        return $createdRecord;
     }
 }
