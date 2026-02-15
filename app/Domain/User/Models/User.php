@@ -81,4 +81,30 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Payment::class, Booking::class);
     }
+
+    public function roleValue(): string
+    {
+        return $this->role instanceof Role ? $this->role->value : (string) $this->role;
+    }
+
+    public function hasRole(Role|string $role): bool
+    {
+        $roleValue = $role instanceof Role ? $role->value : $role;
+
+        return $this->roleValue() === $roleValue;
+    }
+
+    /**
+     * @param  array<int, Role|string>  $roles
+     */
+    public function hasAnyRole(array $roles): bool
+    {
+        foreach ($roles as $role) {
+            if ($this->hasRole($role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

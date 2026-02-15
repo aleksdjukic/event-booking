@@ -19,8 +19,7 @@ class ListBookingsForUserAction
      */
     public function execute(User $user): LengthAwarePaginator
     {
-        $role = $user->role instanceof Role ? $user->role->value : (string) $user->role;
-        $all = $role !== Role::CUSTOMER->value;
+        $all = ! $user->hasRole(Role::CUSTOMER);
 
         return $this->bookingRepository->paginateForUser($user, $all);
     }

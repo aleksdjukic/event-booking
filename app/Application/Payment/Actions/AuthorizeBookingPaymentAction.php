@@ -12,9 +12,7 @@ class AuthorizeBookingPaymentAction
 {
     public function execute(User $user, Booking $booking): void
     {
-        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
-
-        if ($userRole === Role::CUSTOMER->value && $booking->user_id !== $user->id) {
+        if ($user->hasRole(Role::CUSTOMER) && $booking->user_id !== $user->id) {
             throw new DomainException(DomainError::FORBIDDEN);
         }
     }

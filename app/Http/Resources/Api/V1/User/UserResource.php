@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Api\V1\User;
 
-use App\Domain\User\Enums\Role;
 use App\Domain\User\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,14 +14,12 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $role = $this->role instanceof Role ? $this->role->value : (string) $this->role;
-
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'role' => $role,
+            'role' => $this->roleValue(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

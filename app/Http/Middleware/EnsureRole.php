@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Domain\User\Enums\Role;
 use App\Support\Http\ApiResponder;
 use Closure;
 use Illuminate\Http\Request;
@@ -37,9 +36,7 @@ class EnsureRole
             }
         }
 
-        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
-
-        if (! in_array($userRole, $allowedRoles, true)) {
+        if (! $user->hasAnyRole($allowedRoles)) {
             return $this->responder->error('Forbidden', 403);
         }
 

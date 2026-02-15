@@ -10,8 +10,6 @@ class PaymentPolicy
 {
     public function view(User $user, Payment $payment): bool
     {
-        $userRole = $user->role instanceof Role ? $user->role->value : (string) $user->role;
-
-        return $userRole === Role::ADMIN->value || $payment->booking->user_id === $user->id;
+        return $user->hasRole(Role::ADMIN) || $payment->booking->user_id === $user->id;
     }
 }
