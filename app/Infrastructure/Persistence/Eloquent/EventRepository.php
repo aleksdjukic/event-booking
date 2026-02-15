@@ -3,9 +3,6 @@
 namespace App\Infrastructure\Persistence\Eloquent;
 
 use App\Domain\Event\Repositories\EventRepositoryInterface;
-use App\Application\Event\DTO\CreateEventData;
-use App\Application\Event\DTO\ListEventsData;
-use App\Application\Event\DTO\UpdateEventData;
 use App\Domain\Event\Models\Event;
 use App\Domain\User\Models\User;
 use App\Support\Traits\CommonQueryScopes;
@@ -18,17 +15,17 @@ class EventRepository implements EventRepositoryInterface
     /**
      * @return LengthAwarePaginator<int, Event>
      */
-    public function paginate(ListEventsData $query): LengthAwarePaginator
+    public function paginate(int $page, ?string $date, ?string $search, ?string $location): LengthAwarePaginator
     {
         $eventQuery = Event::query();
-        $this->searchByTitle($eventQuery, $query->search, Event::COL_TITLE);
-        $this->filterByDate($eventQuery, $query->date, Event::COL_DATE);
+        $this->searchByTitle($eventQuery, $search, Event::COL_TITLE);
+        $this->filterByDate($eventQuery, $date, Event::COL_DATE);
 
-        if ($query->location !== null && $query->location !== '') {
-            $eventQuery->where(Event::COL_LOCATION, 'like', '%'.$query->location.'%');
+        if ($location !== null && $location !== '') {
+            $eventQuery->where(Event::COL_LOCATION, 'like', '%'.$location.'%');
         }
 
-        return $eventQuery->paginate();
+        return $eventQuery->paginate(page: $page);
     }
 
     public function find(int $id): ?Event
@@ -41,25 +38,25 @@ class EventRepository implements EventRepositoryInterface
         return Event::query()->with(Event::REL_TICKETS)->find($id);
     }
 
-    public function create(User $user, CreateEventData $data): Event
+    public function create(User $user, string $title, ?string $description, string $date, string $location): Event
     {
         $event = new Event();
-        $event->{Event::COL_TITLE} = $data->title;
-        $event->{Event::COL_DESCRIPTION} = $data->description;
-        $event->{Event::COL_DATE} = $data->date;
-        $event->{Event::COL_LOCATION} = $data->location;
+        $event->{Event::COL_TITLE} = $title;
+        $event->{Event::COL_DESCRIPTION} = $description;
+        $event->{Event::COL_DATE} = $date;
+        $event->{Event::COL_LOCATION} = $location;
         $event->{Event::COL_CREATED_BY} = $user->id;
         $event->save();
 
         return $event;
     }
 
-    public function update(Event $event, UpdateEventData $data): Event
+    public function update(Event $event, string $title, ?string $description, string $date, string $location): Event
     {
-        $event->{Event::COL_TITLE} = $data->title;
-        $event->{Event::COL_DESCRIPTION} = $data->description;
-        $event->{Event::COL_DATE} = $data->date;
-        $event->{Event::COL_LOCATION} = $data->location;
+        $event->{Event::COL_TITLE} = $title;
+        $event->{Event::COL_DESCRIPTION} = $description;
+        $event->{Event::COL_DATE} = $date;
+        $event->{Event::COL_LOCATION} = $location;
         $event->save();
 
         return $event;

@@ -15,6 +15,6 @@ class CreateEventAction
 
     public function execute(User $user, CreateEventData $data): Event
     {
-        return $this->eventRepository->create($user, $data);
+        return $this->eventRepository->create($user, $data->title, $data->description, $data->date, $data->location);
     }
 }

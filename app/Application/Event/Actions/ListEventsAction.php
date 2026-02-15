@@ -34,9 +34,13 @@ class ListEventsAction
             $version = (int) Cache::get(EventCache::INDEX_VERSION_KEY, 1);
             $cacheKey = EventCache::indexPageKey($version, $page);
 
-            return Cache::remember($cacheKey, EventCache::INDEX_TTL_SECONDS, fn () => $this->eventRepository->paginate($query));
+            return Cache::remember(
+                $cacheKey,
+                EventCache::INDEX_TTL_SECONDS,
+                fn () => $this->eventRepository->paginate($query->page, $query->date, $query->search, $query->location)
+            );
         }
 
-        return $this->eventRepository->paginate($query);
+        return $this->eventRepository->paginate($query->page, $query->date, $query->search, $query->location);
     }
 }

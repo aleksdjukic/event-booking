@@ -14,6 +14,6 @@ class UpdateEventAction
 
     public function execute(Event $event, UpdateEventData $data): Event
     {
-        return $this->eventRepository->update($event, $data);
+        return $this->eventRepository->update($event, $data->title, $data->description, $data->date, $data->location);
     }
 }
