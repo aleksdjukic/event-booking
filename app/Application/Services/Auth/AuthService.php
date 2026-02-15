@@ -17,11 +17,11 @@ class AuthService implements AuthServiceInterface
     public function register(RegisterData $data): array
     {
         $user = new User();
-        $user->name = $data->name;
-        $user->email = $data->email;
-        $user->phone = $data->phone;
-        $user->role = Role::CUSTOMER;
-        $user->password = Hash::make($data->password);
+        $user->{User::COL_NAME} = $data->name;
+        $user->{User::COL_EMAIL} = $data->email;
+        $user->{User::COL_PHONE} = $data->phone;
+        $user->{User::COL_ROLE} = Role::CUSTOMER;
+        $user->{User::COL_PASSWORD} = Hash::make($data->password);
         $user->save();
 
         return [
@@ -35,7 +35,7 @@ class AuthService implements AuthServiceInterface
      */
     public function login(LoginData $data): ?array
     {
-        $user = User::query()->where('email', $data->email)->first();
+        $user = User::query()->where(User::COL_EMAIL, $data->email)->first();
 
         if (! $user || ! Hash::check($data->password, $user->password)) {
             return null;

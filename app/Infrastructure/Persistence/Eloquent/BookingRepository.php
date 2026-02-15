@@ -23,11 +23,11 @@ class BookingRepository implements BookingRepositoryInterface
     public function create(User $user, int $ticketId, int $quantity, BookingStatus $status): Booking
     {
         $booking = new Booking();
-        $booking->user_id = $user->id;
-        $booking->ticket_id = $ticketId;
-        $booking->quantity = $quantity;
-        $booking->status = $status;
-        $booking->active_booking_key = $this->makeActiveBookingKey($user->id, $ticketId, $status);
+        $booking->{Booking::COL_USER_ID} = $user->id;
+        $booking->{Booking::COL_TICKET_ID} = $ticketId;
+        $booking->{Booking::COL_QUANTITY} = $quantity;
+        $booking->{Booking::COL_STATUS} = $status;
+        $booking->{Booking::COL_ACTIVE_BOOKING_KEY} = $this->makeActiveBookingKey($user->id, $ticketId, $status);
         $booking->save();
 
         return $booking;
@@ -38,10 +38,10 @@ class BookingRepository implements BookingRepositoryInterface
      */
     public function paginateForUser(User $user, bool $all): LengthAwarePaginator
     {
-        $query = Booking::query()->with(['ticket', 'payment']);
+        $query = Booking::query()->with([Booking::REL_TICKET, Booking::REL_PAYMENT]);
 
         if (! $all) {
-            $query->where('user_id', $user->id);
+            $query->where(Booking::COL_USER_ID, $user->id);
         }
 
         return $query->paginate();
@@ -53,9 +53,9 @@ class BookingRepository implements BookingRepositoryInterface
             ? $booking->status
             : BookingStatus::from((string) $booking->status);
 
-        $booking->active_booking_key = $this->makeActiveBookingKey(
-            (int) $booking->user_id,
-            (int) $booking->ticket_id,
+        $booking->{Booking::COL_ACTIVE_BOOKING_KEY} = $this->makeActiveBookingKey(
+            (int) $booking->{Booking::COL_USER_ID},
+            (int) $booking->{Booking::COL_TICKET_ID},
             $status
         );
         $booking->save();

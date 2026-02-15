@@ -20,13 +20,13 @@ class BookingResource extends JsonResource
         $status = $this->status instanceof BookingStatus ? $this->status->value : (string) $this->status;
 
         return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'ticket_id' => $this->ticket_id,
-            'quantity' => $this->quantity,
+            'id' => $this->{Booking::COL_ID},
+            'user_id' => $this->{Booking::COL_USER_ID},
+            'ticket_id' => $this->{Booking::COL_TICKET_ID},
+            'quantity' => $this->{Booking::COL_QUANTITY},
             'status' => $status,
-            'ticket' => new TicketResource($this->whenLoaded('ticket')),
-            'payment' => new PaymentResource($this->whenLoaded('payment')),
+            'ticket' => new TicketResource($this->whenLoaded(Booking::REL_TICKET)),
+            'payment' => new PaymentResource($this->whenLoaded(Booking::REL_PAYMENT)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -21,7 +21,7 @@ class TicketRepository implements TicketRepositoryInterface
     public function findForUpdateWithEvent(int $id): ?Ticket
     {
         return Ticket::query()
-            ->with('event')
+            ->with(Ticket::REL_EVENT)
             ->whereKey($id)
             ->lockForUpdate()
             ->first();
@@ -30,11 +30,11 @@ class TicketRepository implements TicketRepositoryInterface
     public function duplicateTypeExists(int $eventId, string $type, ?int $excludeTicketId = null): bool
     {
         $query = Ticket::query()
-            ->where('event_id', $eventId)
-            ->where('type', $type);
+            ->where(Ticket::COL_EVENT_ID, $eventId)
+            ->where(Ticket::COL_TYPE, $type);
 
         if ($excludeTicketId !== null) {
-            $query->where('id', '!=', $excludeTicketId);
+            $query->where(Ticket::COL_ID, '!=', $excludeTicketId);
         }
 
         return $query->exists();
@@ -43,10 +43,10 @@ class TicketRepository implements TicketRepositoryInterface
     public function create(Event $event, string $type, float $price, int $quantity): Ticket
     {
         $ticket = new Ticket();
-        $ticket->event_id = $event->id;
-        $ticket->type = $type;
-        $ticket->price = round($price, 2);
-        $ticket->quantity = $quantity;
+        $ticket->{Ticket::COL_EVENT_ID} = $event->id;
+        $ticket->{Ticket::COL_TYPE} = $type;
+        $ticket->{Ticket::COL_PRICE} = round($price, 2);
+        $ticket->{Ticket::COL_QUANTITY} = $quantity;
         $ticket->save();
 
         return $ticket;

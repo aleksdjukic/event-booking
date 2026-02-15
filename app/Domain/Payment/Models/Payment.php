@@ -13,13 +13,20 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Payment extends Model
 {
+    public const TABLE = 'payments';
+    public const REL_BOOKING = 'booking';
+    public const COL_ID = 'id';
+    public const COL_BOOKING_ID = 'booking_id';
+    public const COL_AMOUNT = 'amount';
+    public const COL_STATUS = 'status';
+
     /**
      * @var list<string>
      */
     protected $fillable = [
-        'booking_id',
-        'amount',
-        'status',
+        self::COL_BOOKING_ID,
+        self::COL_AMOUNT,
+        self::COL_STATUS,
     ];
 
     /**
@@ -28,9 +35,9 @@ class Payment extends Model
     protected function casts(): array
     {
         return [
-            'booking_id' => 'integer',
-            'amount' => 'float',
-            'status' => PaymentStatus::class,
+            self::COL_BOOKING_ID => 'integer',
+            self::COL_AMOUNT => 'float',
+            self::COL_STATUS => PaymentStatus::class,
         ];
     }
 

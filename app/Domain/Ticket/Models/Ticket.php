@@ -13,14 +13,23 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ticket extends Model
 {
+    public const TABLE = 'tickets';
+    public const REL_EVENT = 'event';
+    public const REL_BOOKINGS = 'bookings';
+    public const COL_ID = 'id';
+    public const COL_EVENT_ID = 'event_id';
+    public const COL_TYPE = 'type';
+    public const COL_PRICE = 'price';
+    public const COL_QUANTITY = 'quantity';
+
     /**
      * @var list<string>
      */
     protected $fillable = [
-        'event_id',
-        'type',
-        'price',
-        'quantity',
+        self::COL_EVENT_ID,
+        self::COL_TYPE,
+        self::COL_PRICE,
+        self::COL_QUANTITY,
     ];
 
     /**
@@ -29,9 +38,9 @@ class Ticket extends Model
     protected function casts(): array
     {
         return [
-            'event_id' => 'integer',
-            'price' => 'float',
-            'quantity' => 'integer',
+            self::COL_EVENT_ID => 'integer',
+            self::COL_PRICE => 'float',
+            self::COL_QUANTITY => 'integer',
         ];
     }
 

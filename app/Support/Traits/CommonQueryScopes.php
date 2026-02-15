@@ -12,13 +12,13 @@ trait CommonQueryScopes
      * @param  Builder<TModel>  $query
      * @return Builder<TModel>
      */
-    public function filterByDate(Builder $query, ?string $date): Builder
+    public function filterByDate(Builder $query, ?string $date, string $column = 'date'): Builder
     {
         if ($date === null || $date === '') {
             return $query;
         }
 
-        return $query->whereDate('date', $date);
+        return $query->whereDate($column, $date);
     }
 
     /**
@@ -26,12 +26,12 @@ trait CommonQueryScopes
      * @param  Builder<TModel>  $query
      * @return Builder<TModel>
      */
-    public function searchByTitle(Builder $query, ?string $search): Builder
+    public function searchByTitle(Builder $query, ?string $search, string $column = 'title'): Builder
     {
         if ($search === null || $search === '') {
             return $query;
         }
 
-        return $query->where('title', 'like', '%'.$search.'%');
+        return $query->where($column, 'like', '%'.$search.'%');
     }
 }

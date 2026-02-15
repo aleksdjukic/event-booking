@@ -16,15 +16,26 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Booking extends Model
 {
+    public const TABLE = 'bookings';
+    public const REL_USER = 'user';
+    public const REL_TICKET = 'ticket';
+    public const REL_PAYMENT = 'payment';
+    public const COL_ID = 'id';
+    public const COL_USER_ID = 'user_id';
+    public const COL_TICKET_ID = 'ticket_id';
+    public const COL_QUANTITY = 'quantity';
+    public const COL_STATUS = 'status';
+    public const COL_ACTIVE_BOOKING_KEY = 'active_booking_key';
+
     /**
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
-        'ticket_id',
-        'quantity',
-        'status',
-        'active_booking_key',
+        self::COL_USER_ID,
+        self::COL_TICKET_ID,
+        self::COL_QUANTITY,
+        self::COL_STATUS,
+        self::COL_ACTIVE_BOOKING_KEY,
     ];
 
     protected static function booted(): void
@@ -34,8 +45,8 @@ class Booking extends Model
                 ? $booking->status
                 : BookingStatus::from((string) $booking->status);
 
-            $booking->active_booking_key = $status->isActive()
-                ? ((int) $booking->user_id).':'.((int) $booking->ticket_id)
+            $booking->{self::COL_ACTIVE_BOOKING_KEY} = $status->isActive()
+                ? ((int) $booking->{self::COL_USER_ID}).':'.((int) $booking->{self::COL_TICKET_ID})
                 : null;
         });
     }
@@ -43,10 +54,10 @@ class Booking extends Model
     protected function casts(): array
     {
         return [
-            'user_id' => 'integer',
-            'ticket_id' => 'integer',
-            'quantity' => 'integer',
-            'status' => BookingStatus::class,
+            self::COL_USER_ID => 'integer',
+            self::COL_TICKET_ID => 'integer',
+            self::COL_QUANTITY => 'integer',
+            self::COL_STATUS => BookingStatus::class,
         ];
     }
 

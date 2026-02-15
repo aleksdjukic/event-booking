@@ -15,11 +15,11 @@ class TicketResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'event_id' => $this->event_id,
-            'type' => $this->type,
-            'price' => $this->price,
-            'quantity' => $this->quantity,
+            'id' => $this->{Ticket::COL_ID},
+            'event_id' => $this->{Ticket::COL_EVENT_ID},
+            'type' => $this->{Ticket::COL_TYPE},
+            'price' => $this->{Ticket::COL_PRICE},
+            'quantity' => $this->{Ticket::COL_QUANTITY},
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

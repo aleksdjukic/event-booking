@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Domain\Booking\Enums\BookingStatus;
 use App\Domain\Booking\Models\Booking;
+use App\Domain\Ticket\Models\Ticket;
 use App\Support\Http\ApiResponder;
 use Closure;
 use Illuminate\Http\Request;
@@ -21,13 +22,13 @@ class PreventDoubleBooking
     public function handle(Request $request, Closure $next): Response
     {
         $ticketParam = $request->route('ticket');
-        $ticketId = is_object($ticketParam) ? (int) $ticketParam->id : (int) $ticketParam;
+        $ticketId = is_object($ticketParam) ? (int) $ticketParam->{Ticket::COL_ID} : (int) $ticketParam;
         $user = $request->user();
 
         $hasActiveBooking = Booking::query()
-            ->where('user_id', $user->id)
-            ->where('ticket_id', $ticketId)
-            ->whereIn('status', [
+            ->where(Booking::COL_USER_ID, $user->id)
+            ->where(Booking::COL_TICKET_ID, $ticketId)
+            ->whereIn(Booking::COL_STATUS, [
                 BookingStatus::PENDING->value,
                 BookingStatus::CONFIRMED->value,
             ])

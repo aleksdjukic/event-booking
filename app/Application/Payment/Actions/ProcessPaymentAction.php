@@ -11,8 +11,11 @@ use App\Domain\Shared\DomainException;
 use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
 use App\Application\Payment\DTO\CreatePaymentData;
 use App\Domain\Booking\Enums\BookingStatus;
+use App\Domain\Event\Models\Event;
 use App\Domain\Payment\Enums\PaymentStatus;
 use App\Domain\Payment\Models\Payment;
+use App\Domain\Ticket\Models\Ticket;
+use App\Domain\Booking\Models\Booking;
 use App\Domain\User\Models\User;
 use App\Infrastructure\Notifications\Booking\BookingConfirmedNotification;
 use Illuminate\Database\QueryException;
@@ -57,7 +60,7 @@ class ProcessPaymentAction
                 $this->authorizeBookingPaymentAction->execute($user, $booking);
                 $this->ensureBookingPayableAction->execute($booking);
 
-                $ticket = $this->ticketRepository->findForUpdateWithEvent($booking->ticket_id);
+                $ticket = $this->ticketRepository->findForUpdateWithEvent($booking->{Booking::COL_TICKET_ID});
 
                 if ($ticket === null) {
                     throw new DomainException(DomainError::TICKET_NOT_FOUND);
@@ -69,7 +72,7 @@ class ProcessPaymentAction
                 $processed = $this->gatewayService->process($booking, $data->forceSuccess);
 
                 if ($processed) {
-                    $ticket->quantity = $ticket->quantity - $booking->quantity;
+                    $ticket->{Ticket::COL_QUANTITY} = $ticket->{Ticket::COL_QUANTITY} - $booking->{Booking::COL_QUANTITY};
                     $this->ticketRepository->save($ticket);
 
                     $booking->status = BookingStatus::CONFIRMED;
@@ -77,9 +80,9 @@ class ProcessPaymentAction
 
                     $notificationPayload = [
                         'booking_id' => $booking->id,
-                        'event_title' => $ticket->event?->title,
-                        'ticket_type' => $ticket->type,
-                        'quantity' => (int) $booking->quantity,
+                        'event_title' => $ticket->{Ticket::REL_EVENT}?->{Event::COL_TITLE},
+                        'ticket_type' => $ticket->{Ticket::COL_TYPE},
+                        'quantity' => (int) $booking->{Booking::COL_QUANTITY},
                     ];
 
                     $paymentStatus = PaymentStatus::SUCCESS;
@@ -98,8 +101,8 @@ class ProcessPaymentAction
             });
 
             if ($this->paymentTransitionGuard->canNotifyCustomer($payment->status) && is_array($notificationPayload)) {
-                $booking = $payment->booking->load('user');
-                $bookingUser = $booking->user;
+                $booking = $payment->{Payment::REL_BOOKING}->load(Booking::REL_USER);
+                $bookingUser = $booking->{Booking::REL_USER};
 
                 if ($bookingUser instanceof User) {
                     $bookingUser->notify(new BookingConfirmedNotification(
@@ -111,7 +114,7 @@ class ProcessPaymentAction
                 }
             }
 
-            return $payment->load('booking');
+            return $payment->load(Payment::REL_BOOKING);
         } catch (QueryException $exception) {
             if ($this->isDuplicatePaymentException($exception)) {
                 throw new DomainException(DomainError::PAYMENT_ALREADY_EXISTS);
@@ -125,13 +128,13 @@ class ProcessPaymentAction
     {
         $message = strtolower($exception->getMessage());
 
-        if (str_contains($message, 'payments_booking_id_unique')) {
+        if (str_contains($message, Payment::TABLE.'_'.Payment::COL_BOOKING_ID.'_unique')) {
             return true;
         }
 
-        $hasBookingIdColumn = str_contains($message, 'payments.booking_id')
-            || str_contains($message, '`booking_id`')
-            || str_contains($message, ' booking_id ');
+        $hasBookingIdColumn = str_contains($message, Payment::TABLE.'.'.Payment::COL_BOOKING_ID)
+            || str_contains($message, '`'.Payment::COL_BOOKING_ID.'`')
+            || str_contains($message, ' '.Payment::COL_BOOKING_ID.' ');
         $hasUniqueHint = str_contains($message, 'unique') || str_contains($message, 'duplicate');
 
         return $hasBookingIdColumn && $hasUniqueHint;

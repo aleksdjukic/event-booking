@@ -10,8 +10,8 @@ class PaymentIdempotencyRepository implements PaymentIdempotencyRepositoryInterf
     public function findForUserByKey(int $userId, string $idempotencyKey): ?PaymentIdempotencyKey
     {
         return PaymentIdempotencyKey::query()
-            ->where('user_id', $userId)
-            ->where('idempotency_key', $idempotencyKey)
+            ->where(PaymentIdempotencyKey::COL_USER_ID, $userId)
+            ->where(PaymentIdempotencyKey::COL_IDEMPOTENCY_KEY, $idempotencyKey)
             ->first();
     }
 
@@ -19,19 +19,19 @@ class PaymentIdempotencyRepository implements PaymentIdempotencyRepositoryInterf
     {
         return PaymentIdempotencyKey::query()->firstOrCreate(
             [
-                'user_id' => $userId,
-                'idempotency_key' => $idempotencyKey,
+                PaymentIdempotencyKey::COL_USER_ID => $userId,
+                PaymentIdempotencyKey::COL_IDEMPOTENCY_KEY => $idempotencyKey,
             ],
             [
-                'booking_id' => $bookingId,
-                'payment_id' => null,
+                PaymentIdempotencyKey::COL_BOOKING_ID => $bookingId,
+                PaymentIdempotencyKey::COL_PAYMENT_ID => null,
             ]
         );
     }
 
     public function attachPayment(PaymentIdempotencyKey $record, int $paymentId): PaymentIdempotencyKey
     {
-        $record->payment_id = $paymentId;
+        $record->{PaymentIdempotencyKey::COL_PAYMENT_ID} = $paymentId;
         $record->save();
 
         return $record;

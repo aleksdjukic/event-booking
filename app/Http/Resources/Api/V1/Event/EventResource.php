@@ -16,13 +16,13 @@ class EventResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'date' => $this->date,
-            'location' => $this->location,
-            'created_by' => $this->created_by,
-            'tickets' => TicketResource::collection($this->whenLoaded('tickets')),
+            'id' => $this->{Event::COL_ID},
+            'title' => $this->{Event::COL_TITLE},
+            'description' => $this->{Event::COL_DESCRIPTION},
+            'date' => $this->{Event::COL_DATE},
+            'location' => $this->{Event::COL_LOCATION},
+            'created_by' => $this->{Event::COL_CREATED_BY},
+            'tickets' => TicketResource::collection($this->whenLoaded(Event::REL_TICKETS)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

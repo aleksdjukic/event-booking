@@ -19,11 +19,11 @@ class PaymentResource extends JsonResource
         $status = $this->status instanceof PaymentStatus ? $this->status->value : (string) $this->status;
 
         return [
-            'id' => $this->id,
-            'booking_id' => $this->booking_id,
-            'amount' => $this->amount,
+            'id' => $this->{Payment::COL_ID},
+            'booking_id' => $this->{Payment::COL_BOOKING_ID},
+            'amount' => $this->{Payment::COL_AMOUNT},
             'status' => $status,
-            'booking' => new BookingResource($this->whenLoaded('booking')),
+            'booking' => new BookingResource($this->whenLoaded(Payment::REL_BOOKING)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -9,14 +9,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PaymentIdempotencyKey extends Model
 {
+    public const TABLE = 'payment_idempotency_keys';
+    public const REL_USER = 'user';
+    public const REL_BOOKING = 'booking';
+    public const REL_PAYMENT = 'payment';
+    public const COL_ID = 'id';
+    public const COL_USER_ID = 'user_id';
+    public const COL_BOOKING_ID = 'booking_id';
+    public const COL_IDEMPOTENCY_KEY = 'idempotency_key';
+    public const COL_PAYMENT_ID = 'payment_id';
+
     /**
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
-        'booking_id',
-        'idempotency_key',
-        'payment_id',
+        self::COL_USER_ID,
+        self::COL_BOOKING_ID,
+        self::COL_IDEMPOTENCY_KEY,
+        self::COL_PAYMENT_ID,
     ];
 
     /**
@@ -25,9 +35,9 @@ class PaymentIdempotencyKey extends Model
     protected function casts(): array
     {
         return [
-            'user_id' => 'integer',
-            'booking_id' => 'integer',
-            'payment_id' => 'integer',
+            self::COL_USER_ID => 'integer',
+            self::COL_BOOKING_ID => 'integer',
+            self::COL_PAYMENT_ID => 'integer',
         ];
     }
 

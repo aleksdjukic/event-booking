@@ -19,6 +19,19 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
+    public const TABLE = 'users';
+    public const REL_EVENTS = 'events';
+    public const REL_BOOKINGS = 'bookings';
+    public const REL_PAYMENTS = 'payments';
+    public const COL_ID = 'id';
+    public const COL_NAME = 'name';
+    public const COL_EMAIL = 'email';
+    public const COL_PHONE = 'phone';
+    public const COL_PASSWORD = 'password';
+    public const COL_ROLE = 'role';
+    public const COL_REMEMBER_TOKEN = 'remember_token';
+    public const COL_EMAIL_VERIFIED_AT = 'email_verified_at';
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -28,10 +41,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'password',
+        self::COL_NAME,
+        self::COL_EMAIL,
+        self::COL_PHONE,
+        self::COL_PASSWORD,
     ];
 
     /**
@@ -40,8 +53,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        self::COL_PASSWORD,
+        self::COL_REMEMBER_TOKEN,
     ];
 
     /**
@@ -52,9 +65,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'role' => Role::class,
+            self::COL_EMAIL_VERIFIED_AT => 'datetime',
+            self::COL_PASSWORD => 'hashed',
+            self::COL_ROLE => Role::class,
         ];
     }
 
@@ -63,7 +76,7 @@ class User extends Authenticatable
      */
     public function events(): HasMany
     {
-        return $this->hasMany(Event::class, 'created_by');
+        return $this->hasMany(Event::class, Event::COL_CREATED_BY);
     }
 
     /**

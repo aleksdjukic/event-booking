@@ -10,15 +10,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    public const TABLE = 'events';
+    public const REL_USER = 'user';
+    public const REL_TICKETS = 'tickets';
+    public const COL_ID = 'id';
+    public const COL_TITLE = 'title';
+    public const COL_DESCRIPTION = 'description';
+    public const COL_DATE = 'date';
+    public const COL_LOCATION = 'location';
+    public const COL_CREATED_BY = 'created_by';
+
     /**
      * @var list<string>
      */
     protected $fillable = [
-        'title',
-        'description',
-        'date',
-        'location',
-        'created_by',
+        self::COL_TITLE,
+        self::COL_DESCRIPTION,
+        self::COL_DATE,
+        self::COL_LOCATION,
+        self::COL_CREATED_BY,
     ];
 
     /**
@@ -27,7 +37,7 @@ class Event extends Model
     protected function casts(): array
     {
         return [
-            'created_by' => 'integer',
+            self::COL_CREATED_BY => 'integer',
         ];
     }
 
@@ -36,7 +46,7 @@ class Event extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, self::COL_CREATED_BY);
     }
 
     /**
