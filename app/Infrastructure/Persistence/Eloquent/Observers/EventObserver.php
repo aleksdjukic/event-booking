@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Persistence\Eloquent\Observers;
 
 use App\Domain\Event\Models\Event;
+use App\Domain\Event\Support\EventCache;
 use Illuminate\Support\Facades\Cache;
 
 class EventObserver
@@ -29,10 +30,10 @@ class EventObserver
 
     private function bumpEventIndexVersion(): void
     {
-        if (! Cache::has('events:index:version')) {
-            Cache::forever('events:index:version', 1);
+        if (! Cache::has(EventCache::INDEX_VERSION_KEY)) {
+            Cache::forever(EventCache::INDEX_VERSION_KEY, 1);
         }
 
-        Cache::increment('events:index:version');
+        Cache::increment(EventCache::INDEX_VERSION_KEY);
     }
 }

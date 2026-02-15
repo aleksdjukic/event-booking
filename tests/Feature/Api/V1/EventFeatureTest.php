@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api\V1;
 
+use App\Domain\Event\Support\EventCache;
 use App\Domain\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
@@ -58,7 +59,7 @@ class EventFeatureTest extends TestCase
 
     public function test_event_creation_bumps_cache_version(): void
     {
-        Cache::put('events:index:version', 1);
+        Cache::put(EventCache::INDEX_VERSION_KEY, 1);
 
         $organizer = $this->createUser('organizer', 'event.cache.organizer@example.com');
         Sanctum::actingAs($organizer);
@@ -70,7 +71,7 @@ class EventFeatureTest extends TestCase
             'location' => 'Nis',
         ])->assertStatus(201);
 
-        $this->assertGreaterThanOrEqual(2, (int) Cache::get('events:index:version'));
+        $this->assertGreaterThanOrEqual(2, (int) Cache::get(EventCache::INDEX_VERSION_KEY));
     }
 
     private function createUser(string $role, string $email): User

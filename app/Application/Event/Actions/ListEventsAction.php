@@ -5,6 +5,7 @@ namespace App\Application\Event\Actions;
 use App\Application\Event\DTO\ListEventsData;
 use App\Domain\Event\Models\Event;
 use App\Domain\Event\Repositories\EventRepositoryInterface;
+use App\Domain\Event\Support\EventCache;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 
@@ -30,10 +31,10 @@ class ListEventsAction
         $nonCacheableKeys = array_diff($queryKeys, ['page']);
 
         if ($nonCacheableKeys === []) {
-            $version = Cache::get('events:index:version', 1);
-            $cacheKey = 'events:index:v'.$version.':page:'.$page;
+            $version = (int) Cache::get(EventCache::INDEX_VERSION_KEY, 1);
+            $cacheKey = EventCache::indexPageKey($version, $page);
 
-            return Cache::remember($cacheKey, 120, fn () => $this->eventRepository->paginate($query));
+            return Cache::remember($cacheKey, EventCache::INDEX_TTL_SECONDS, fn () => $this->eventRepository->paginate($query));
         }
 
         return $this->eventRepository->paginate($query);
