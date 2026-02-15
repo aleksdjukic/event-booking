@@ -1,6 +1,6 @@
 # Event Booking System API
 
-[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![PHP](https://img.shields.io/badge/PHP-8.4%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)](https://laravel.com/)
 [![Sanctum](https://img.shields.io/badge/Auth-Sanctum-0EA5E9)](https://laravel.com/docs/12.x/sanctum)
 [![CI](https://github.com/aleksdjukic/event-booking/actions/workflows/ci.yml/badge.svg)](https://github.com/aleksdjukic/event-booking/actions/workflows/ci.yml)
@@ -22,7 +22,7 @@ Production-grade Laravel backend for event booking with clean domain structure, 
 - Full automated quality gates (`phpstan`, feature + unit tests).
 
 ## Tech Stack
-- PHP 8.2+
+- PHP 8.4+
 - Laravel 12
 - Laravel Sanctum
 - PHPUnit
