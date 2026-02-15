@@ -12,6 +12,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement('DROP INDEX IF EXISTS bookings_unique_active_per_user_ticket');
+        }
+
         Schema::table('bookings', function (Blueprint $table): void {
             $table->string('active_booking_key')->nullable()->after('status');
             $table->unique('active_booking_key', 'bookings_active_booking_key_unique');
@@ -98,6 +102,12 @@ return new class extends Migration
             DB::statement('DROP TRIGGER IF EXISTS bookings_status_check_update');
             DB::statement('DROP TRIGGER IF EXISTS payments_status_check_insert');
             DB::statement('DROP TRIGGER IF EXISTS payments_status_check_update');
+
+            DB::statement(
+                "CREATE UNIQUE INDEX IF NOT EXISTS bookings_unique_active_per_user_ticket
+                ON bookings (user_id, ticket_id)
+                WHERE status = '".BookingStatus::PENDING->value."'"
+            );
         }
 
         Schema::table('bookings', function (Blueprint $table): void {
