@@ -21,10 +21,10 @@ class PaymentGatewayService implements PaymentGatewayInterface
     private function simulateGatewayResult(Booking $booking): bool
     {
         $seed = crc32(implode('|', [
-            (string) $booking->id,
-            (string) $booking->ticket_id,
-            (string) $booking->user_id,
-            (string) $booking->quantity,
+            (string) $booking->{Booking::COL_ID},
+            (string) $booking->{Booking::COL_TICKET_ID},
+            (string) $booking->{Booking::COL_USER_ID},
+            (string) $booking->{Booking::COL_QUANTITY},
         ]));
 
         return ($seed % 100) < self::SIMULATED_SUCCESS_RATE;
