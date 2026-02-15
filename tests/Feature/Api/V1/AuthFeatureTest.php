@@ -37,12 +37,12 @@ class AuthFeatureTest extends TestCase
             'password' => 'password123',
             'password_confirmation' => 'password123',
             'phone' => '0601234567',
-            'role' => 'admin',
+            'role' => Role::ADMIN->value,
         ]);
 
         $response->assertStatus(201)
             ->assertJsonPath('success', true)
-            ->assertJsonPath('data.user.role', 'customer');
+            ->assertJsonPath('data.user.role', Role::CUSTOMER->value);
     }
 
     public function test_login_returns_token(): void

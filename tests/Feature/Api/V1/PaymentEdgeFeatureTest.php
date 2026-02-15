@@ -95,12 +95,12 @@ class PaymentEdgeFeatureTest extends TestCase
 
         $this->assertDatabaseHas('bookings', [
             'id' => $booking->id,
-            'status' => 'cancelled',
+            'status' => BookingStatus::CANCELLED->value,
         ]);
 
         $this->assertDatabaseHas('payments', [
             'booking_id' => $booking->id,
-            'status' => 'failed',
+            'status' => PaymentStatus::FAILED->value,
             'amount' => '240.00',
         ]);
 

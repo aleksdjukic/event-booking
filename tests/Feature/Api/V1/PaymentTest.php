@@ -72,12 +72,12 @@ class PaymentTest extends TestCase
 
         $this->assertDatabaseHas('bookings', [
             'id' => $booking->id,
-            'status' => 'confirmed',
+            'status' => BookingStatus::CONFIRMED->value,
         ]);
 
         $this->assertDatabaseHas('payments', [
             'booking_id' => $booking->id,
-            'status' => 'success',
+            'status' => PaymentStatus::SUCCESS->value,
             'amount' => '200.00',
         ]);
 
