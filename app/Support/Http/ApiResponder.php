@@ -2,9 +2,11 @@
 
 namespace App\Support\Http;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Support\Responsable;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiResponder
 {
@@ -38,16 +40,28 @@ class ApiResponder
 
     private function normalizeData(mixed $data): mixed
     {
+        if ($data instanceof AnonymousResourceCollection) {
+            $response = $data->toResponse(request());
+
+            if ($response instanceof JsonResponse) {
+                return $response->getData(true);
+            }
+        }
+
+        if ($data instanceof JsonResource) {
+            return $data->resolve(request());
+        }
+
         if ($data instanceof Responsable) {
             $response = $data->toResponse(request());
 
             if ($response instanceof JsonResponse) {
                 return $response->getData(true);
             }
+        }
 
-            if ($response instanceof Response) {
-                return json_decode($response->getContent() ?: 'null', true);
-            }
+        if ($data instanceof Arrayable) {
+            return $data->toArray();
         }
 
         return $data;
