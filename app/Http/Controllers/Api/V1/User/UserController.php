@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\V1\ApiController;
 use App\Http\Resources\Api\V1\User\UserResource;
-use App\Support\Http\ApiResponder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
-    public function __construct(private readonly ApiResponder $responder)
-    {
-    }
-
     public function me(Request $request): JsonResponse
     {
-        return $this->responder->success(UserResource::make($request->user()), 'OK');
+        return $this->success(UserResource::make($request->user()), 'OK');
     }
 }
