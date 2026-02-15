@@ -26,7 +26,6 @@ use App\Application\Services\Payment\PaymentTransactionService;
 use App\Infrastructure\Persistence\Eloquent\TicketRepository;
 use App\Application\Services\Ticket\TicketService;
 use App\Infrastructure\Persistence\Eloquent\EventRepository;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
@@ -55,13 +54,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Factory::guessFactoryNamesUsing(static function (string $modelName): string {
-            $segments = explode('\\', $modelName);
-            $class = end($segments);
-
-            return 'Database\\Factories\\'.$class.'Factory';
-        });
-
         JsonResource::withoutWrapping();
         Event::observe(EventObserver::class);
     }
