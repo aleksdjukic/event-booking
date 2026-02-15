@@ -6,6 +6,8 @@ use App\Domain\Payment\Models\Payment;
 use App\Domain\Ticket\Models\Ticket;
 use App\Domain\User\Models\User;
 use App\Domain\Booking\Enums\BookingStatus;
+use Database\Factories\BookingFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Booking extends Model
 {
+    /** @use HasFactory<BookingFactory> */
+    use HasFactory;
+
     public const TABLE = 'bookings';
     public const REL_USER = 'user';
     public const REL_TICKET = 'ticket';
@@ -59,6 +64,11 @@ class Booking extends Model
             self::COL_QUANTITY => 'integer',
             self::COL_STATUS => BookingStatus::class,
         ];
+    }
+
+    protected static function newFactory(): BookingFactory
+    {
+        return BookingFactory::new();
     }
 
     /**

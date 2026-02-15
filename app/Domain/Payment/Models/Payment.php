@@ -4,6 +4,8 @@ namespace App\Domain\Payment\Models;
 
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Enums\PaymentStatus;
+use Database\Factories\PaymentFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Payment extends Model
 {
+    /** @use HasFactory<PaymentFactory> */
+    use HasFactory;
+
     public const TABLE = 'payments';
     public const REL_BOOKING = 'booking';
     public const COL_ID = 'id';
@@ -41,6 +46,11 @@ class Payment extends Model
             self::COL_AMOUNT => 'float',
             self::COL_STATUS => PaymentStatus::class,
         ];
+    }
+
+    protected static function newFactory(): PaymentFactory
+    {
+        return PaymentFactory::new();
     }
 
     /**

@@ -4,12 +4,17 @@ namespace App\Domain\Event\Models;
 
 use App\Domain\Ticket\Models\Ticket;
 use App\Domain\User\Models\User;
+use Database\Factories\EventFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    /** @use HasFactory<EventFactory> */
+    use HasFactory;
+
     public const TABLE = 'events';
     public const REL_USER = 'user';
     public const REL_TICKETS = 'tickets';
@@ -41,6 +46,11 @@ class Event extends Model
         return [
             self::COL_CREATED_BY => 'integer',
         ];
+    }
+
+    protected static function newFactory(): EventFactory
+    {
+        return EventFactory::new();
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Domain\Ticket\Models;
 
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Event\Models\Event;
+use Database\Factories\TicketFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ticket extends Model
 {
+    /** @use HasFactory<TicketFactory> */
+    use HasFactory;
+
     public const TABLE = 'tickets';
     public const REL_EVENT = 'event';
     public const REL_BOOKINGS = 'bookings';
@@ -44,6 +49,11 @@ class Ticket extends Model
             self::COL_PRICE => 'float',
             self::COL_QUANTITY => 'integer',
         ];
+    }
+
+    protected static function newFactory(): TicketFactory
+    {
+        return TicketFactory::new();
     }
 
     /**

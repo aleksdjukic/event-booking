@@ -6,6 +6,7 @@ use App\Domain\Booking\Models\Booking;
 use App\Domain\Event\Models\Event;
 use App\Domain\Payment\Models\Payment;
 use App\Domain\User\Enums\Role;
+use Database\Factories\UserFactory;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -71,6 +72,11 @@ class User extends Authenticatable
             self::COL_PASSWORD => 'hashed',
             self::COL_ROLE => Role::class,
         ];
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 
     /**
