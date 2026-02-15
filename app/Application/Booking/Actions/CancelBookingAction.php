@@ -19,9 +19,7 @@ class CancelBookingAction
 
     public function execute(Booking $booking): Booking
     {
-        $currentStatus = $booking->status instanceof BookingStatus
-            ? $booking->status
-            : BookingStatus::from((string) $booking->status);
+        $currentStatus = $booking->statusEnum();
 
         if (! $this->transitionGuard->canCancel($currentStatus)) {
             throw new DomainException(DomainError::BOOKING_NOT_PENDING);

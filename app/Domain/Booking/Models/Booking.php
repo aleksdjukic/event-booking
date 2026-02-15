@@ -43,9 +43,7 @@ class Booking extends Model
     protected static function booted(): void
     {
         static::saving(function (Booking $booking): void {
-            $status = $booking->status instanceof BookingStatus
-                ? $booking->status
-                : BookingStatus::from((string) $booking->status);
+            $status = $booking->statusEnum();
 
             $booking->{self::COL_ACTIVE_BOOKING_KEY} = $status->isActive()
                 ? ((int) $booking->{self::COL_USER_ID}).':'.((int) $booking->{self::COL_TICKET_ID})
@@ -85,5 +83,12 @@ class Booking extends Model
     public function payment(): HasOne
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function statusEnum(): BookingStatus
+    {
+        return $this->status instanceof BookingStatus
+            ? $this->status
+            : BookingStatus::from((string) $this->status);
     }
 }
