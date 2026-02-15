@@ -45,60 +45,60 @@ class ProcessPaymentAction
             }
         }
 
-        $notificationPayload = null;
-
-        DB::beginTransaction();
-
         try {
-            $booking = $this->bookingRepository->findForUpdate($data->bookingId);
+            $notificationPayload = null;
+            $payment = DB::transaction(function () use ($data, $user, $idempotencyRecord, &$notificationPayload): Payment {
+                $booking = $this->bookingRepository->findForUpdate($data->bookingId);
 
-            if ($booking === null) {
-                throw new DomainException(DomainError::BOOKING_NOT_FOUND);
-            }
+                if ($booking === null) {
+                    throw new DomainException(DomainError::BOOKING_NOT_FOUND);
+                }
 
-            $this->authorizeBookingPaymentAction->execute($user, $booking);
-            $this->ensureBookingPayableAction->execute($booking);
+                $this->authorizeBookingPaymentAction->execute($user, $booking);
+                $this->ensureBookingPayableAction->execute($booking);
 
-            $ticket = $this->ticketRepository->findForUpdateWithEvent($booking->ticket_id);
+                $ticket = $this->ticketRepository->findForUpdateWithEvent($booking->ticket_id);
 
-            if ($ticket === null) {
-                throw new DomainException(DomainError::TICKET_NOT_FOUND);
-            }
+                if ($ticket === null) {
+                    throw new DomainException(DomainError::TICKET_NOT_FOUND);
+                }
 
-            $this->ensureTicketInventoryForBookingAction->execute($booking, $ticket);
+                $this->ensureTicketInventoryForBookingAction->execute($booking, $ticket);
 
-            $amount = round(((float) $ticket->price) * (int) $booking->quantity, 2);
-            $processed = $this->gatewayService->process($booking, $data->forceSuccess);
+                $amount = round(((float) $ticket->price) * (int) $booking->quantity, 2);
+                $processed = $this->gatewayService->process($booking, $data->forceSuccess);
 
-            if ($processed) {
-                $ticket->quantity = $ticket->quantity - $booking->quantity;
-                $this->ticketRepository->save($ticket);
+                if ($processed) {
+                    $ticket->quantity = $ticket->quantity - $booking->quantity;
+                    $this->ticketRepository->save($ticket);
 
-                $booking->status = BookingStatus::CONFIRMED;
-                $this->bookingRepository->save($booking);
+                    $booking->status = BookingStatus::CONFIRMED;
+                    $this->bookingRepository->save($booking);
 
-                $notificationPayload = [
-                    'booking_id' => $booking->id,
-                    'event_title' => $ticket->event?->title,
-                    'ticket_type' => $ticket->type,
-                    'quantity' => (int) $booking->quantity,
-                ];
+                    $notificationPayload = [
+                        'booking_id' => $booking->id,
+                        'event_title' => $ticket->event?->title,
+                        'ticket_type' => $ticket->type,
+                        'quantity' => (int) $booking->quantity,
+                    ];
 
-                $paymentStatus = PaymentStatus::SUCCESS;
-            } else {
-                $booking->status = BookingStatus::CANCELLED;
-                $this->bookingRepository->save($booking);
-                $paymentStatus = PaymentStatus::FAILED;
-            }
+                    $paymentStatus = PaymentStatus::SUCCESS;
+                } else {
+                    $booking->status = BookingStatus::CANCELLED;
+                    $this->bookingRepository->save($booking);
+                    $paymentStatus = PaymentStatus::FAILED;
+                }
 
-            $payment = $this->paymentRepository->create($booking, $amount, $paymentStatus);
-            if ($idempotencyRecord !== null) {
-                $this->attachPaymentToIdempotencyRecordAction->execute($idempotencyRecord, (int) $payment->id);
-            }
-            DB::commit();
+                $payment = $this->paymentRepository->create($booking, $amount, $paymentStatus);
+                if ($idempotencyRecord !== null) {
+                    $this->attachPaymentToIdempotencyRecordAction->execute($idempotencyRecord, (int) $payment->id);
+                }
+
+                return $payment;
+            });
 
             if ($this->paymentTransitionGuard->canNotifyCustomer($payment->status) && is_array($notificationPayload)) {
-                $booking = $booking->load('user');
+                $booking = $payment->booking->load('user');
                 $bookingUser = $booking->user;
 
                 if ($bookingUser instanceof User) {
@@ -112,19 +112,11 @@ class ProcessPaymentAction
             }
 
             return $payment->load('booking');
-        } catch (DomainException $exception) {
-            DB::rollBack();
-            throw $exception;
         } catch (QueryException $exception) {
-            DB::rollBack();
-
             if ($this->isDuplicatePaymentException($exception)) {
                 throw new DomainException(DomainError::PAYMENT_ALREADY_EXISTS);
             }
 
-            throw $exception;
-        } catch (\Throwable $exception) {
-            DB::rollBack();
             throw $exception;
         }
     }
