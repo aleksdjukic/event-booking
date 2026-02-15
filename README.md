@@ -74,6 +74,7 @@ Status codes:
 - `users.role` is stored as string in DB for portability and cast to `App\Domain\User\Enums\Role` in the `User` model.
 - `User -> payments` is implemented with `hasManyThrough` via `bookings`.
 - `tickets.quantity` is treated as remaining inventory and is decremented only after successful payment.
+- Active booking uniqueness is enforced via `bookings.active_booking_key` (see `2026_02_14_130000_strengthen_booking_and_payment_constraints.php`) as the canonical cross-DB strategy.
 
 ## Queue and Notifications
 - Booking confirmation notification implements `ShouldQueue`.
