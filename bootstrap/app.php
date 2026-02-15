@@ -45,7 +45,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 DomainError::BOOKING_NOT_PENDING,
                 DomainError::INVALID_BOOKING_STATE_FOR_PAYMENT,
                 DomainError::PAYMENT_ALREADY_EXISTS,
-                DomainError::IDEMPOTENCY_KEY_REUSED => 409,
+                DomainError::IDEMPOTENCY_KEY_REUSED,
+                DomainError::ACTIVE_BOOKING_ALREADY_EXISTS => 409,
             };
 
             return $apiError($exception->getMessage(), $status);

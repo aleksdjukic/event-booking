@@ -16,6 +16,7 @@ enum DomainError: string
     case INVALID_BOOKING_STATE_FOR_PAYMENT = 'invalid_booking_state_for_payment';
     case PAYMENT_ALREADY_EXISTS = 'payment_already_exists';
     case IDEMPOTENCY_KEY_REUSED = 'idempotency_key_reused';
+    case ACTIVE_BOOKING_ALREADY_EXISTS = 'active_booking_already_exists';
 
     public function message(): string
     {
@@ -32,6 +33,7 @@ enum DomainError: string
             self::INVALID_BOOKING_STATE_FOR_PAYMENT => 'Invalid booking state for payment.',
             self::PAYMENT_ALREADY_EXISTS => 'Payment already exists for this booking.',
             self::IDEMPOTENCY_KEY_REUSED => 'Idempotency key cannot be reused for another booking.',
+            self::ACTIVE_BOOKING_ALREADY_EXISTS => 'You already have an active booking for this ticket.',
         };
     }
 }
