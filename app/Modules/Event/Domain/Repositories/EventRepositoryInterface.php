@@ -3,6 +3,7 @@
 namespace App\Modules\Event\Domain\Repositories;
 
 use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Event\Domain\Queries\EventListQuery;
 use App\Modules\User\Domain\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -11,7 +12,7 @@ interface EventRepositoryInterface
     /**
      * @return LengthAwarePaginator<int, Event>
      */
-    public function paginate(int $page, ?string $date, ?string $search, ?string $location): LengthAwarePaginator;
+    public function paginate(EventListQuery $query): LengthAwarePaginator;
 
     public function find(int $id): ?Event;
 

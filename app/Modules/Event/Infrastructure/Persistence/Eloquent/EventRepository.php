@@ -4,28 +4,26 @@ namespace App\Modules\Event\Infrastructure\Persistence\Eloquent;
 
 use App\Modules\Event\Domain\Repositories\EventRepositoryInterface;
 use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Event\Domain\Queries\EventListQuery;
+use App\Modules\Event\Infrastructure\Persistence\Eloquent\Specifications\EventListSpecification;
 use App\Modules\User\Domain\Models\User;
-use App\Modules\Shared\Support\Traits\CommonQueryScopes;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository implements EventRepositoryInterface
 {
-    use CommonQueryScopes;
+    public function __construct(private readonly EventListSpecification $listSpecification)
+    {
+    }
 
     /**
      * @return LengthAwarePaginator<int, Event>
      */
-    public function paginate(int $page, ?string $date, ?string $search, ?string $location): LengthAwarePaginator
+    public function paginate(EventListQuery $query): LengthAwarePaginator
     {
         $eventQuery = Event::query();
-        $this->searchByTitle($eventQuery, $search, Event::COL_TITLE);
-        $this->filterByDate($eventQuery, $date, Event::COL_DATE);
+        $this->listSpecification->apply($eventQuery, $query);
 
-        if ($location !== null && $location !== '') {
-            $eventQuery->where(Event::COL_LOCATION, 'like', '%'.$location.'%');
-        }
-
-        return $eventQuery->paginate(page: $page);
+        return $eventQuery->paginate(page: $query->page);
     }
 
     public function find(int $id): ?Event

@@ -4,6 +4,7 @@ namespace App\Modules\Event\Application\Actions;
 
 use App\Modules\Event\Application\DTO\ListEventsData;
 use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Event\Domain\Queries\EventListQuery;
 use App\Modules\Event\Domain\Repositories\EventRepositoryInterface;
 use App\Modules\Event\Domain\Support\EventCache;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -20,27 +21,24 @@ class ListEventsAction
      */
     public function execute(ListEventsData $query): LengthAwarePaginator
     {
-        $page = $query->page;
-        $queryArray = [
-            'page' => $query->page,
-            'date' => $query->date,
-            'search' => $query->search,
-            'location' => $query->location,
-        ];
-        $queryKeys = array_keys(array_filter($queryArray, static fn (mixed $value) => $value !== null));
-        $nonCacheableKeys = array_diff($queryKeys, ['page']);
+        $listQuery = new EventListQuery(
+            page: $query->page,
+            date: $query->date,
+            search: $query->search,
+            location: $query->location,
+        );
 
-        if ($nonCacheableKeys === []) {
+        if ($listQuery->hasOnlyPageFilter()) {
             $version = (int) Cache::get(EventCache::INDEX_VERSION_KEY, 1);
-            $cacheKey = EventCache::indexPageKey($version, $page);
+            $cacheKey = EventCache::indexPageKey($version, $listQuery->page);
 
             return Cache::remember(
                 $cacheKey,
                 EventCache::INDEX_TTL_SECONDS,
-                fn () => $this->eventRepository->paginate($query->page, $query->date, $query->search, $query->location)
+                fn () => $this->eventRepository->paginate($listQuery)
             );
         }
 
-        return $this->eventRepository->paginate($query->page, $query->date, $query->search, $query->location);
+        return $this->eventRepository->paginate($listQuery);
     }
 }
