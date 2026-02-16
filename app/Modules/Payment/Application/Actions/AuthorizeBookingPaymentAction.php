@@ -12,7 +12,10 @@ class AuthorizeBookingPaymentAction
 {
     public function execute(User $user, Booking $booking): void
     {
-        if ($user->hasRole(Role::CUSTOMER) && $booking->user_id !== $user->id) {
+        if (
+            $user->hasRole(Role::CUSTOMER)
+            && $booking->{Booking::COL_USER_ID} !== $user->{User::COL_ID}
+        ) {
             throw new DomainException(DomainError::FORBIDDEN);
         }
     }

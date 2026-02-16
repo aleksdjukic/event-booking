@@ -22,7 +22,7 @@ class BookingController extends ApiController
     {
         $booking = $this->bookingService->create(
             $request->user(),
-            $ticket->id,
+            (int) $ticket->{Ticket::COL_ID},
             $request->toDto()
         );
 

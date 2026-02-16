@@ -22,9 +22,9 @@ class CreateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'string', 'max:50'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'quantity' => ['required', 'integer', 'min:0'],
+            CreateTicketData::INPUT_TYPE => ['required', 'string', 'max:50'],
+            CreateTicketData::INPUT_PRICE => ['required', 'numeric', 'min:0'],
+            CreateTicketData::INPUT_QUANTITY => ['required', 'integer', 'min:0'],
         ];
     }
 

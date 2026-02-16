@@ -24,7 +24,7 @@ class EnsureBookingPayableAction
             throw new DomainException(DomainError::INVALID_BOOKING_STATE_FOR_PAYMENT);
         }
 
-        if ($this->paymentRepository->existsForBooking($booking->id)) {
+        if ($this->paymentRepository->existsForBooking((int) $booking->{Booking::COL_ID})) {
             throw new DomainException(DomainError::PAYMENT_ALREADY_EXISTS);
         }
     }

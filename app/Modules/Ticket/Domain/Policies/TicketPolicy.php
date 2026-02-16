@@ -15,7 +15,8 @@ class TicketPolicy
             return true;
         }
 
-        return $user->hasRole(Role::ORGANIZER) && $event->created_by === $user->id;
+        return $user->hasRole(Role::ORGANIZER)
+            && $event->{Event::COL_CREATED_BY} === $user->{User::COL_ID};
     }
 
     public function update(User $user, Ticket $ticket): bool
@@ -24,7 +25,8 @@ class TicketPolicy
             return true;
         }
 
-        return $user->hasRole(Role::ORGANIZER) && $ticket->event->created_by === $user->id;
+        return $user->hasRole(Role::ORGANIZER)
+            && $ticket->{Ticket::REL_EVENT}->{Event::COL_CREATED_BY} === $user->{User::COL_ID};
     }
 
     public function delete(User $user, Ticket $ticket): bool
@@ -33,6 +35,7 @@ class TicketPolicy
             return true;
         }
 
-        return $user->hasRole(Role::ORGANIZER) && $ticket->event->created_by === $user->id;
+        return $user->hasRole(Role::ORGANIZER)
+            && $ticket->{Ticket::REL_EVENT}->{Event::COL_CREATED_BY} === $user->{User::COL_ID};
     }
 }

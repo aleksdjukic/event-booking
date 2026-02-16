@@ -29,7 +29,8 @@ class EventPolicy
             return true;
         }
 
-        return $user->hasRole(Role::ORGANIZER) && $event->created_by === $user->id;
+        return $user->hasRole(Role::ORGANIZER)
+            && $event->{Event::COL_CREATED_BY} === $user->{User::COL_ID};
     }
 
     public function delete(User $user, Event $event): bool
@@ -38,6 +39,7 @@ class EventPolicy
             return true;
         }
 
-        return $user->hasRole(Role::ORGANIZER) && $event->created_by === $user->id;
+        return $user->hasRole(Role::ORGANIZER)
+            && $event->{Event::COL_CREATED_BY} === $user->{User::COL_ID};
     }
 }

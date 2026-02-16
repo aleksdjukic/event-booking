@@ -11,6 +11,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin Payment */
 class PaymentResource extends JsonResource
 {
+    private const OUT_ID = Payment::COL_ID;
+    private const OUT_BOOKING_ID = Payment::COL_BOOKING_ID;
+    private const OUT_AMOUNT = Payment::COL_AMOUNT;
+    private const OUT_STATUS = Payment::COL_STATUS;
+    private const OUT_BOOKING = Payment::REL_BOOKING;
+    private const OUT_CREATED_AT = Payment::COL_CREATED_AT;
+    private const OUT_UPDATED_AT = Payment::COL_UPDATED_AT;
+
     /**
      * @return array<string, mixed>
      */
@@ -19,13 +27,13 @@ class PaymentResource extends JsonResource
         $status = $this->status instanceof PaymentStatus ? $this->status->value : (string) $this->status;
 
         return [
-            'id' => $this->{Payment::COL_ID},
-            'booking_id' => $this->{Payment::COL_BOOKING_ID},
-            'amount' => $this->{Payment::COL_AMOUNT},
-            'status' => $status,
-            'booking' => new BookingResource($this->whenLoaded(Payment::REL_BOOKING)),
-            'created_at' => $this->{Payment::COL_CREATED_AT},
-            'updated_at' => $this->{Payment::COL_UPDATED_AT},
+            self::OUT_ID => $this->{Payment::COL_ID},
+            self::OUT_BOOKING_ID => $this->{Payment::COL_BOOKING_ID},
+            self::OUT_AMOUNT => $this->{Payment::COL_AMOUNT},
+            self::OUT_STATUS => $status,
+            self::OUT_BOOKING => new BookingResource($this->whenLoaded(Payment::REL_BOOKING)),
+            self::OUT_CREATED_AT => $this->{Payment::COL_CREATED_AT},
+            self::OUT_UPDATED_AT => $this->{Payment::COL_UPDATED_AT},
         ];
     }
 }

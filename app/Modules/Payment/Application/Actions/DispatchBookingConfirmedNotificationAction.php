@@ -10,7 +10,12 @@ use App\Modules\Booking\Infrastructure\Notifications\BookingConfirmedNotificatio
 class DispatchBookingConfirmedNotificationAction
 {
     /**
-     * @param  array{booking_id: int, event_title: string|null, ticket_type: string|null, quantity: int}  $notificationPayload
+     * @param  array{
+     *   booking_id: int,
+     *   event_title: string|null,
+     *   ticket_type: string|null,
+     *   quantity: int
+     * }  $notificationPayload
      */
     public function execute(Payment $payment, array $notificationPayload): void
     {
@@ -22,10 +27,10 @@ class DispatchBookingConfirmedNotificationAction
         }
 
         $bookingUser->notify(new BookingConfirmedNotification(
-            $notificationPayload['booking_id'],
-            $notificationPayload['event_title'],
-            $notificationPayload['ticket_type'],
-            $notificationPayload['quantity'],
+            $notificationPayload[BookingConfirmedNotification::PAYLOAD_BOOKING_ID],
+            $notificationPayload[BookingConfirmedNotification::PAYLOAD_EVENT_TITLE],
+            $notificationPayload[BookingConfirmedNotification::PAYLOAD_TICKET_TYPE],
+            $notificationPayload[BookingConfirmedNotification::PAYLOAD_QUANTITY],
         ));
     }
 }

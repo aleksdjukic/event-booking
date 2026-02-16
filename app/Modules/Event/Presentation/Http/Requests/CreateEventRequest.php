@@ -19,10 +19,10 @@ class CreateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'date' => ['required', 'date'],
-            'location' => ['required', 'string', 'max:255'],
+            CreateEventData::INPUT_TITLE => ['required', 'string', 'max:255'],
+            CreateEventData::INPUT_DESCRIPTION => ['nullable', 'string'],
+            CreateEventData::INPUT_DATE => ['required', 'date'],
+            CreateEventData::INPUT_LOCATION => ['required', 'string', 'max:255'],
         ];
     }
 

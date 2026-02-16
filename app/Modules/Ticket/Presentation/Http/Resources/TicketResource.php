@@ -9,19 +9,27 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin Ticket */
 class TicketResource extends JsonResource
 {
+    private const OUT_ID = Ticket::COL_ID;
+    private const OUT_EVENT_ID = Ticket::COL_EVENT_ID;
+    private const OUT_TYPE = Ticket::COL_TYPE;
+    private const OUT_PRICE = Ticket::COL_PRICE;
+    private const OUT_QUANTITY = Ticket::COL_QUANTITY;
+    private const OUT_CREATED_AT = Ticket::COL_CREATED_AT;
+    private const OUT_UPDATED_AT = Ticket::COL_UPDATED_AT;
+
     /**
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->{Ticket::COL_ID},
-            'event_id' => $this->{Ticket::COL_EVENT_ID},
-            'type' => $this->{Ticket::COL_TYPE},
-            'price' => $this->{Ticket::COL_PRICE},
-            'quantity' => $this->{Ticket::COL_QUANTITY},
-            'created_at' => $this->{Ticket::COL_CREATED_AT},
-            'updated_at' => $this->{Ticket::COL_UPDATED_AT},
+            self::OUT_ID => $this->{Ticket::COL_ID},
+            self::OUT_EVENT_ID => $this->{Ticket::COL_EVENT_ID},
+            self::OUT_TYPE => $this->{Ticket::COL_TYPE},
+            self::OUT_PRICE => $this->{Ticket::COL_PRICE},
+            self::OUT_QUANTITY => $this->{Ticket::COL_QUANTITY},
+            self::OUT_CREATED_AT => $this->{Ticket::COL_CREATED_AT},
+            self::OUT_UPDATED_AT => $this->{Ticket::COL_UPDATED_AT},
         ];
     }
 }

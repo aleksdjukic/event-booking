@@ -6,6 +6,7 @@ use App\Modules\Booking\Domain\Repositories\BookingRepositoryInterface;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
 use App\Modules\Ticket\Domain\Repositories\TicketRepositoryInterface;
+use App\Modules\Ticket\Domain\Models\Ticket;
 use App\Modules\Booking\Application\DTO\CreateBookingData;
 use App\Modules\Booking\Domain\Enums\BookingStatus;
 use App\Modules\Booking\Domain\Models\Booking;
@@ -31,15 +32,20 @@ class CreateBookingAction
                     throw new DomainException(DomainError::TICKET_NOT_FOUND);
                 }
 
-                if ($ticket->quantity <= 0) {
+                if ($ticket->{Ticket::COL_QUANTITY} <= 0) {
                     throw new DomainException(DomainError::TICKET_SOLD_OUT);
                 }
 
-                if ($data->quantity > $ticket->quantity) {
+                if ($data->quantity > $ticket->{Ticket::COL_QUANTITY}) {
                     throw new DomainException(DomainError::NOT_ENOUGH_TICKET_INVENTORY);
                 }
 
-                return $this->bookingRepository->create($user, (int) $ticket->id, $data->quantity, BookingStatus::PENDING);
+                return $this->bookingRepository->create(
+                    $user,
+                    (int) $ticket->{Ticket::COL_ID},
+                    $data->quantity,
+                    BookingStatus::PENDING
+                );
             });
         } catch (QueryException $exception) {
             if ($this->isActiveBookingUniqueConstraintViolation($exception)) {

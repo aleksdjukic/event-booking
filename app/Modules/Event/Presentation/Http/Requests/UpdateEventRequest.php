@@ -21,10 +21,10 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'date' => ['required', 'date'],
-            'location' => ['required', 'string', 'max:255'],
+            UpdateEventData::INPUT_TITLE => ['required', 'string', 'max:255'],
+            UpdateEventData::INPUT_DESCRIPTION => ['nullable', 'string'],
+            UpdateEventData::INPUT_DATE => ['required', 'date'],
+            UpdateEventData::INPUT_LOCATION => ['required', 'string', 'max:255'],
         ];
     }
 

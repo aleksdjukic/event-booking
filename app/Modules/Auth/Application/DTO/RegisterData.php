@@ -4,6 +4,11 @@ namespace App\Modules\Auth\Application\DTO;
 
 class RegisterData
 {
+    public const INPUT_NAME = 'name';
+    public const INPUT_EMAIL = 'email';
+    public const INPUT_PASSWORD = 'password';
+    public const INPUT_PHONE = 'phone';
+
     public function __construct(
         public readonly string $name,
         public readonly string $email,
@@ -18,10 +23,10 @@ class RegisterData
     public static function fromArray(array $data): self
     {
         return new self(
-            name: (string) $data['name'],
-            email: (string) $data['email'],
-            password: (string) $data['password'],
-            phone: isset($data['phone']) ? (string) $data['phone'] : null,
+            name: (string) $data[self::INPUT_NAME],
+            email: (string) $data[self::INPUT_EMAIL],
+            password: (string) $data[self::INPUT_PASSWORD],
+            phone: isset($data[self::INPUT_PHONE]) ? (string) $data[self::INPUT_PHONE] : null,
         );
     }
 }

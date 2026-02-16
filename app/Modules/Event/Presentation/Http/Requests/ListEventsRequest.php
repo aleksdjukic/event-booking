@@ -18,10 +18,10 @@ class ListEventsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => ['nullable', 'date'],
-            'search' => ['nullable', 'string', 'max:100'],
-            'location' => ['nullable', 'string', 'max:100'],
-            'page' => ['nullable', 'integer', 'min:1'],
+            ListEventsData::INPUT_DATE => ['nullable', 'date'],
+            ListEventsData::INPUT_SEARCH => ['nullable', 'string', 'max:100'],
+            ListEventsData::INPUT_LOCATION => ['nullable', 'string', 'max:100'],
+            ListEventsData::INPUT_PAGE => ['nullable', 'integer', 'min:1'],
         ];
     }
 

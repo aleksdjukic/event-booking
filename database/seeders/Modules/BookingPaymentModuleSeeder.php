@@ -13,6 +13,11 @@ use Illuminate\Support\Collection;
 
 class BookingPaymentModuleSeeder extends Seeder
 {
+    private const PLAN_TICKET_INDEX = 'ticket_index';
+    private const PLAN_CUSTOMER_INDEX = 'customer_index';
+    private const PLAN_QUANTITY = Booking::COL_QUANTITY;
+    private const PLAN_STATUS = Booking::COL_STATUS;
+
     public function run(): void
     {
         $customers = User::query()
@@ -40,36 +45,36 @@ class BookingPaymentModuleSeeder extends Seeder
     private function seedBookings(Collection $customers, Collection $tickets): Collection
     {
         $bookingsPlan = [
-            ['ticket_index' => 0, 'customer_index' => 0, 'quantity' => 2, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 1, 'customer_index' => 1, 'quantity' => 1, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 2, 'customer_index' => 2, 'quantity' => 3, 'status' => BookingStatus::CANCELLED],
-            ['ticket_index' => 3, 'customer_index' => 3, 'quantity' => 2, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 4, 'customer_index' => 4, 'quantity' => 5, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 5, 'customer_index' => 5, 'quantity' => 1, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 6, 'customer_index' => 6, 'quantity' => 4, 'status' => BookingStatus::CANCELLED],
-            ['ticket_index' => 7, 'customer_index' => 7, 'quantity' => 2, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 8, 'customer_index' => 8, 'quantity' => 3, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 9, 'customer_index' => 9, 'quantity' => 1, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 10, 'customer_index' => 0, 'quantity' => 2, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 11, 'customer_index' => 1, 'quantity' => 4, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 12, 'customer_index' => 2, 'quantity' => 1, 'status' => BookingStatus::CANCELLED],
-            ['ticket_index' => 13, 'customer_index' => 3, 'quantity' => 3, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 14, 'customer_index' => 4, 'quantity' => 2, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 0, 'customer_index' => 5, 'quantity' => 1, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 4, 'customer_index' => 6, 'quantity' => 2, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 8, 'customer_index' => 7, 'quantity' => 1, 'status' => BookingStatus::PENDING],
-            ['ticket_index' => 10, 'customer_index' => 8, 'quantity' => 2, 'status' => BookingStatus::CONFIRMED],
-            ['ticket_index' => 14, 'customer_index' => 9, 'quantity' => 3, 'status' => BookingStatus::CANCELLED],
+            [self::PLAN_TICKET_INDEX => 0, self::PLAN_CUSTOMER_INDEX => 0, self::PLAN_QUANTITY => 2, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 1, self::PLAN_CUSTOMER_INDEX => 1, self::PLAN_QUANTITY => 1, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 2, self::PLAN_CUSTOMER_INDEX => 2, self::PLAN_QUANTITY => 3, self::PLAN_STATUS => BookingStatus::CANCELLED],
+            [self::PLAN_TICKET_INDEX => 3, self::PLAN_CUSTOMER_INDEX => 3, self::PLAN_QUANTITY => 2, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 4, self::PLAN_CUSTOMER_INDEX => 4, self::PLAN_QUANTITY => 5, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 5, self::PLAN_CUSTOMER_INDEX => 5, self::PLAN_QUANTITY => 1, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 6, self::PLAN_CUSTOMER_INDEX => 6, self::PLAN_QUANTITY => 4, self::PLAN_STATUS => BookingStatus::CANCELLED],
+            [self::PLAN_TICKET_INDEX => 7, self::PLAN_CUSTOMER_INDEX => 7, self::PLAN_QUANTITY => 2, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 8, self::PLAN_CUSTOMER_INDEX => 8, self::PLAN_QUANTITY => 3, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 9, self::PLAN_CUSTOMER_INDEX => 9, self::PLAN_QUANTITY => 1, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 10, self::PLAN_CUSTOMER_INDEX => 0, self::PLAN_QUANTITY => 2, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 11, self::PLAN_CUSTOMER_INDEX => 1, self::PLAN_QUANTITY => 4, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 12, self::PLAN_CUSTOMER_INDEX => 2, self::PLAN_QUANTITY => 1, self::PLAN_STATUS => BookingStatus::CANCELLED],
+            [self::PLAN_TICKET_INDEX => 13, self::PLAN_CUSTOMER_INDEX => 3, self::PLAN_QUANTITY => 3, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 14, self::PLAN_CUSTOMER_INDEX => 4, self::PLAN_QUANTITY => 2, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 0, self::PLAN_CUSTOMER_INDEX => 5, self::PLAN_QUANTITY => 1, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 4, self::PLAN_CUSTOMER_INDEX => 6, self::PLAN_QUANTITY => 2, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 8, self::PLAN_CUSTOMER_INDEX => 7, self::PLAN_QUANTITY => 1, self::PLAN_STATUS => BookingStatus::PENDING],
+            [self::PLAN_TICKET_INDEX => 10, self::PLAN_CUSTOMER_INDEX => 8, self::PLAN_QUANTITY => 2, self::PLAN_STATUS => BookingStatus::CONFIRMED],
+            [self::PLAN_TICKET_INDEX => 14, self::PLAN_CUSTOMER_INDEX => 9, self::PLAN_QUANTITY => 3, self::PLAN_STATUS => BookingStatus::CANCELLED],
         ];
 
         $bookings = collect();
 
         foreach ($bookingsPlan as $plan) {
             $bookings->push(Booking::query()->create([
-                Booking::COL_USER_ID => $customers[$plan['customer_index']]->{User::COL_ID},
-                Booking::COL_TICKET_ID => $tickets[$plan['ticket_index']]->{Ticket::COL_ID},
-                Booking::COL_QUANTITY => $plan['quantity'],
-                Booking::COL_STATUS => $plan['status']->value,
+                Booking::COL_USER_ID => $customers[$plan[self::PLAN_CUSTOMER_INDEX]]->{User::COL_ID},
+                Booking::COL_TICKET_ID => $tickets[$plan[self::PLAN_TICKET_INDEX]]->{Ticket::COL_ID},
+                Booking::COL_QUANTITY => $plan[self::PLAN_QUANTITY],
+                Booking::COL_STATUS => $plan[self::PLAN_STATUS]->value,
             ]));
         }
 

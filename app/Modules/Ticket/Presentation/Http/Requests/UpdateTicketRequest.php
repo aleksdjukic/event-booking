@@ -21,9 +21,9 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['sometimes', 'string', 'max:50'],
-            'price' => ['sometimes', 'numeric', 'min:0'],
-            'quantity' => ['sometimes', 'integer', 'min:0'],
+            UpdateTicketData::INPUT_TYPE => ['sometimes', 'string', 'max:50'],
+            UpdateTicketData::INPUT_PRICE => ['sometimes', 'numeric', 'min:0'],
+            UpdateTicketData::INPUT_QUANTITY => ['sometimes', 'integer', 'min:0'],
         ];
     }
 

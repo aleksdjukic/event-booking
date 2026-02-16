@@ -27,7 +27,7 @@ class EventController extends ApiController
 
     public function show(Event $event): JsonResponse
     {
-        $event = $this->eventService->show($event->id);
+        $event = $this->eventService->show((int) $event->{Event::COL_ID});
 
         return $this->success(EventResource::make($event), 'OK');
     }

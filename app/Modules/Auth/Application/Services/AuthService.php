@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService implements AuthServiceInterface
 {
+    public const PAYLOAD_USER = 'user';
+    public const PAYLOAD_TOKEN = 'token';
+    public const API_TOKEN_NAME = 'api-token';
+
     /**
      * @return array{user: User, token: string}
      */
@@ -25,8 +29,8 @@ class AuthService implements AuthServiceInterface
         $user->save();
 
         return [
-            'user' => $user,
-            'token' => $user->createToken('api-token')->plainTextToken,
+            self::PAYLOAD_USER => $user,
+            self::PAYLOAD_TOKEN => $user->createToken(self::API_TOKEN_NAME)->plainTextToken,
         ];
     }
 
@@ -42,8 +46,8 @@ class AuthService implements AuthServiceInterface
         }
 
         return [
-            'user' => $user,
-            'token' => $user->createToken('api-token')->plainTextToken,
+            self::PAYLOAD_USER => $user,
+            self::PAYLOAD_TOKEN => $user->createToken(self::API_TOKEN_NAME)->plainTextToken,
         ];
     }
 

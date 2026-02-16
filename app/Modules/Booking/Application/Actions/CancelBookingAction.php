@@ -25,7 +25,7 @@ class CancelBookingAction
             throw new DomainException(DomainError::BOOKING_NOT_PENDING);
         }
 
-        $booking->status = BookingStatus::CANCELLED;
+        $booking->{Booking::COL_STATUS} = BookingStatus::CANCELLED;
 
         return $this->bookingRepository->save($booking);
     }

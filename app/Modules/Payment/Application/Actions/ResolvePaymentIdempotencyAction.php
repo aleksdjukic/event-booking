@@ -21,17 +21,17 @@ class ResolvePaymentIdempotencyAction
             return null;
         }
 
-        $record = $this->idempotencyRepository->findForUserByKey($user->id, $data->idempotencyKey);
+        $record = $this->idempotencyRepository->findForUserByKey((int) $user->{User::COL_ID}, $data->idempotencyKey);
         if ($record !== null) {
-            if ((int) $record->booking_id !== $data->bookingId) {
+            if ((int) $record->{PaymentIdempotencyKey::COL_BOOKING_ID} !== $data->bookingId) {
                 throw new DomainException(DomainError::IDEMPOTENCY_KEY_REUSED);
             }
 
             return $record;
         }
 
-        $createdRecord = $this->idempotencyRepository->createPending($user->id, $data->bookingId, $data->idempotencyKey);
-        if ((int) $createdRecord->booking_id !== $data->bookingId) {
+        $createdRecord = $this->idempotencyRepository->createPending((int) $user->{User::COL_ID}, $data->bookingId, $data->idempotencyKey);
+        if ((int) $createdRecord->{PaymentIdempotencyKey::COL_BOOKING_ID} !== $data->bookingId) {
             throw new DomainException(DomainError::IDEMPOTENCY_KEY_REUSED);
         }
 

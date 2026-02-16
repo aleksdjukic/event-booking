@@ -20,7 +20,7 @@ class CreateTicketAction
 
     public function execute(Event $event, CreateTicketData $data): Ticket
     {
-        if ($this->ticketRepository->duplicateTypeExists($event->id, $data->type)) {
+        if ($this->ticketRepository->duplicateTypeExists((int) $event->{Event::COL_ID}, $data->type)) {
             throw new DomainException(DomainError::DUPLICATE_TICKET_TYPE);
         }
 

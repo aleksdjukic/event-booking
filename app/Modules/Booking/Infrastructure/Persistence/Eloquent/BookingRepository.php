@@ -23,7 +23,7 @@ class BookingRepository implements BookingRepositoryInterface
     public function create(User $user, int $ticketId, int $quantity, BookingStatus $status): Booking
     {
         $booking = new Booking();
-        $booking->{Booking::COL_USER_ID} = $user->id;
+        $booking->{Booking::COL_USER_ID} = $user->{User::COL_ID};
         $booking->{Booking::COL_TICKET_ID} = $ticketId;
         $booking->{Booking::COL_QUANTITY} = $quantity;
         $booking->{Booking::COL_STATUS} = $status;
@@ -40,7 +40,7 @@ class BookingRepository implements BookingRepositoryInterface
         $query = Booking::query()->with([Booking::REL_TICKET, Booking::REL_PAYMENT]);
 
         if (! $all) {
-            $query->where(Booking::COL_USER_ID, $user->id);
+            $query->where(Booking::COL_USER_ID, $user->{User::COL_ID});
         }
 
         return $query->paginate();

@@ -18,7 +18,7 @@ class CreateBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quantity' => ['required', 'integer', 'min:1', 'max:10'],
+            CreateBookingData::INPUT_QUANTITY => ['required', 'integer', 'min:1', 'max:10'],
         ];
     }
 

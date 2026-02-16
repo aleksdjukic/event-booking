@@ -10,6 +10,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiResponder
 {
+    private const KEY_SUCCESS = 'success';
+    private const KEY_MESSAGE = 'message';
+    private const KEY_DATA = 'data';
+    private const KEY_ERRORS = 'errors';
+
     public function success(mixed $data = null, string $message = 'OK', int $status = 200): JsonResponse
     {
         return response()->json($this->payload(true, $message, $this->normalizeData($data)), $status);
@@ -31,10 +36,10 @@ class ApiResponder
     private function payload(bool $success, string $message, mixed $data, mixed $errors = null): array
     {
         return [
-            'success' => $success,
-            'message' => $message,
-            'data' => $data,
-            'errors' => $success ? null : $errors,
+            self::KEY_SUCCESS => $success,
+            self::KEY_MESSAGE => $message,
+            self::KEY_DATA => $data,
+            self::KEY_ERRORS => $success ? null : $errors,
         ];
     }
 

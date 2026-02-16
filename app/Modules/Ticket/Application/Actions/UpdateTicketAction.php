@@ -19,22 +19,26 @@ class UpdateTicketAction
 
     public function execute(Ticket $ticket, UpdateTicketData $data): Ticket
     {
-        $type = $data->type ?? $ticket->type;
+        $type = $data->type ?? (string) $ticket->{Ticket::COL_TYPE};
 
-        if ($this->ticketRepository->duplicateTypeExists($ticket->event_id, $type, $ticket->id)) {
+        if ($this->ticketRepository->duplicateTypeExists(
+            (int) $ticket->{Ticket::COL_EVENT_ID},
+            $type,
+            (int) $ticket->{Ticket::COL_ID}
+        )) {
             throw new DomainException(DomainError::DUPLICATE_TICKET_TYPE);
         }
 
         if ($data->type !== null) {
-            $ticket->type = $data->type;
+            $ticket->{Ticket::COL_TYPE} = $data->type;
         }
 
         if ($data->price !== null) {
-            $ticket->price = round($data->price, 2);
+            $ticket->{Ticket::COL_PRICE} = round($data->price, 2);
         }
 
         if ($data->quantity !== null) {
-            $ticket->quantity = $data->quantity;
+            $ticket->{Ticket::COL_QUANTITY} = $data->quantity;
         }
 
         $this->ticketRepository->save($ticket);

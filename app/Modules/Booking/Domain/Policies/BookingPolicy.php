@@ -15,11 +15,13 @@ class BookingPolicy
 
     public function view(User $user, Booking $booking): bool
     {
-        return $user->hasRole(Role::ADMIN) || $booking->user_id === $user->id;
+        return $user->hasRole(Role::ADMIN)
+            || $booking->{Booking::COL_USER_ID} === $user->{User::COL_ID};
     }
 
     public function cancel(User $user, Booking $booking): bool
     {
-        return $user->hasRole(Role::ADMIN) || $booking->user_id === $user->id;
+        return $user->hasRole(Role::ADMIN)
+            || $booking->{Booking::COL_USER_ID} === $user->{User::COL_ID};
     }
 }

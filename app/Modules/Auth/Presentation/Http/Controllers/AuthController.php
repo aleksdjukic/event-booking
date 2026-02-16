@@ -3,6 +3,7 @@
 namespace App\Modules\Auth\Presentation\Http\Controllers;
 
 use App\Modules\Auth\Application\Contracts\AuthServiceInterface;
+use App\Modules\Auth\Application\Services\AuthService;
 use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
 use App\Modules\Auth\Presentation\Http\Requests\LoginRequest;
 use App\Modules\Auth\Presentation\Http\Requests\RegisterRequest;
@@ -21,8 +22,8 @@ class AuthController extends ApiController
         $payload = $this->authService->register($request->toDto());
 
         return $this->created([
-            'user' => UserResource::make($payload['user']),
-            'token' => $payload['token'],
+            AuthService::PAYLOAD_USER => UserResource::make($payload[AuthService::PAYLOAD_USER]),
+            AuthService::PAYLOAD_TOKEN => $payload[AuthService::PAYLOAD_TOKEN],
         ], 'Registered successfully');
     }
 
@@ -34,8 +35,8 @@ class AuthController extends ApiController
         }
 
         return $this->success([
-            'user' => UserResource::make($payload['user']),
-            'token' => $payload['token'],
+            AuthService::PAYLOAD_USER => UserResource::make($payload[AuthService::PAYLOAD_USER]),
+            AuthService::PAYLOAD_TOKEN => $payload[AuthService::PAYLOAD_TOKEN],
         ], 'Login successful');
     }
 

@@ -43,7 +43,7 @@ class EventRepository implements EventRepositoryInterface
         $event->{Event::COL_DESCRIPTION} = $description;
         $event->{Event::COL_DATE} = $date;
         $event->{Event::COL_LOCATION} = $location;
-        $event->{Event::COL_CREATED_BY} = $user->id;
+        $event->{Event::COL_CREATED_BY} = $user->{User::COL_ID};
         $event->save();
 
         return $event;

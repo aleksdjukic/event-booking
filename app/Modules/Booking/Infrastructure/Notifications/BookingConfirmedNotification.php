@@ -10,6 +10,13 @@ class BookingConfirmedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public const PAYLOAD_BOOKING_ID = 'booking_id';
+    public const PAYLOAD_EVENT_TITLE = 'event_title';
+    public const PAYLOAD_TICKET_TYPE = 'ticket_type';
+    public const PAYLOAD_QUANTITY = 'quantity';
+
+    private const CHANNEL_DATABASE = 'database';
+
     public function __construct(
         private readonly int $bookingId,
         private readonly ?string $eventTitle,
@@ -23,7 +30,7 @@ class BookingConfirmedNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return [self::CHANNEL_DATABASE];
     }
 
     /**
@@ -32,10 +39,10 @@ class BookingConfirmedNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            'booking_id' => $this->bookingId,
-            'event_title' => $this->eventTitle,
-            'ticket_type' => $this->ticketType,
-            'quantity' => $this->quantity,
+            self::PAYLOAD_BOOKING_ID => $this->bookingId,
+            self::PAYLOAD_EVENT_TITLE => $this->eventTitle,
+            self::PAYLOAD_TICKET_TYPE => $this->ticketType,
+            self::PAYLOAD_QUANTITY => $this->quantity,
         ];
     }
 }

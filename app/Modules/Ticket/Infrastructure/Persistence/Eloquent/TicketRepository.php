@@ -43,7 +43,7 @@ class TicketRepository implements TicketRepositoryInterface
     public function create(Event $event, string $type, float $price, int $quantity): Ticket
     {
         $ticket = new Ticket();
-        $ticket->{Ticket::COL_EVENT_ID} = $event->id;
+        $ticket->{Ticket::COL_EVENT_ID} = $event->{Event::COL_ID};
         $ticket->{Ticket::COL_TYPE} = $type;
         $ticket->{Ticket::COL_PRICE} = round($price, 2);
         $ticket->{Ticket::COL_QUANTITY} = $quantity;

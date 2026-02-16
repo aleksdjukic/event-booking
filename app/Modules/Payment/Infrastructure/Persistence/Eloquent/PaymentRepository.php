@@ -22,7 +22,7 @@ class PaymentRepository implements PaymentRepositoryInterface
     public function create(Booking $booking, float $amount, PaymentStatus $status): Payment
     {
         $payment = new Payment();
-        $payment->{Payment::COL_BOOKING_ID} = $booking->id;
+        $payment->{Payment::COL_BOOKING_ID} = $booking->{Booking::COL_ID};
         $payment->{Payment::COL_AMOUNT} = round($amount, 2);
         $payment->{Payment::COL_STATUS} = $status;
         $payment->save();
