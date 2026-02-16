@@ -5,8 +5,8 @@ namespace App\Modules\Payment\Application\Actions;
 use App\Modules\Payment\Application\DTO\CreatePaymentData;
 use App\Domain\Payment\Models\PaymentIdempotencyKey;
 use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 use App\Domain\User\Models\User;
 
 class ResolvePaymentIdempotencyAction

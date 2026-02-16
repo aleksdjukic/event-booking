@@ -5,8 +5,8 @@ namespace App\Modules\Payment\Application\Actions;
 use App\Domain\Booking\BookingTransitionGuard;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 
 class EnsureBookingPayableAction
 {

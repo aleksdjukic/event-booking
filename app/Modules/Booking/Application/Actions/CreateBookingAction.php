@@ -3,8 +3,8 @@
 namespace App\Modules\Booking\Application\Actions;
 
 use App\Domain\Booking\Repositories\BookingRepositoryInterface;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
 use App\Modules\Booking\Application\DTO\CreateBookingData;
 use App\Domain\Booking\Enums\BookingStatus;

@@ -3,8 +3,8 @@
 namespace App\Modules\Payment\Application\Actions;
 
 use App\Domain\Booking\Models\Booking;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 use App\Domain\Ticket\Models\Ticket;
 
 class EnsureTicketInventoryForBookingAction

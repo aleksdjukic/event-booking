@@ -5,7 +5,7 @@ namespace App\Modules\Event\Infrastructure\Persistence\Eloquent;
 use App\Domain\Event\Repositories\EventRepositoryInterface;
 use App\Domain\Event\Models\Event;
 use App\Domain\User\Models\User;
-use App\Support\Traits\CommonQueryScopes;
+use App\Modules\Shared\Support\Traits\CommonQueryScopes;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository implements EventRepositoryInterface

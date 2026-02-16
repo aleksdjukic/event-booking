@@ -2,7 +2,7 @@
 
 namespace App\Modules\Shared\Presentation\Http\Middleware;
 
-use App\Support\Http\ApiResponder;
+use App\Modules\Shared\Support\Http\ApiResponder;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

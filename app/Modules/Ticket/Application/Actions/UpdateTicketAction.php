@@ -4,8 +4,8 @@ namespace App\Modules\Ticket\Application\Actions;
 
 use App\Modules\Event\Application\Actions\BumpEventIndexVersionAction;
 use App\Modules\Ticket\Application\DTO\UpdateTicketData;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 use App\Domain\Ticket\Models\Ticket;
 use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
 

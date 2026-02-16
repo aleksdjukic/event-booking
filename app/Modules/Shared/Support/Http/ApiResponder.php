@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Http;
+namespace App\Modules\Shared\Support\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\JsonResponse;

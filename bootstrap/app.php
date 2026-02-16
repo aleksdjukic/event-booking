@@ -1,9 +1,9 @@
 <?php
 
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 use App\Modules\Shared\Presentation\Http\Middleware\EnsureRole;
-use App\Support\Http\ApiResponder;
+use App\Modules\Shared\Support\Http\ApiResponder;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

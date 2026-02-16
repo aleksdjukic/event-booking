@@ -6,8 +6,8 @@ use App\Domain\Booking\BookingTransitionGuard;
 use App\Domain\Booking\Enums\BookingStatus;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Booking\Repositories\BookingRepositoryInterface;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 
 class CancelBookingAction
 {

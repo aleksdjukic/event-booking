@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Shared;
+namespace App\Modules\Shared\Domain;
 
 use RuntimeException;
 

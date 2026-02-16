@@ -3,7 +3,7 @@
 namespace App\Modules\Shared\Presentation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Support\Http\ApiResponder;
+use App\Modules\Shared\Support\Http\ApiResponder;
 use Illuminate\Http\JsonResponse;
 
 abstract class ApiController extends Controller

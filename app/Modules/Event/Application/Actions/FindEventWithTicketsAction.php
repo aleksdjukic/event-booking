@@ -4,8 +4,8 @@ namespace App\Modules\Event\Application\Actions;
 
 use App\Domain\Event\Models\Event;
 use App\Domain\Event\Repositories\EventRepositoryInterface;
-use App\Domain\Shared\DomainError;
-use App\Domain\Shared\DomainException;
+use App\Modules\Shared\Domain\DomainError;
+use App\Modules\Shared\Domain\DomainException;
 
 class FindEventWithTicketsAction
 {
