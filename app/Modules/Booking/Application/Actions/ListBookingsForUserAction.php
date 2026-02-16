@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Booking\Actions;
+namespace App\Modules\Booking\Application\Actions;
 
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Booking\Repositories\BookingRepositoryInterface;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Booking\Presentation\Http\Controllers;
 
-use App\Application\Contracts\Services\BookingServiceInterface;
+use App\Modules\Booking\Application\Contracts\BookingServiceInterface;
 use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Ticket\Models\Ticket;

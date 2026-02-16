@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application\Contracts\Services;
+namespace App\Modules\Booking\Application\Contracts;
 
-use App\Application\Booking\DTO\CreateBookingData;
+use App\Modules\Booking\Application\DTO\CreateBookingData;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\User\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;

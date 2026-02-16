@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Application\Services\Booking;
+namespace App\Modules\Booking\Application\Services;
 
-use App\Application\Booking\Actions\CancelBookingAction;
-use App\Application\Booking\Actions\CreateBookingAction;
-use App\Application\Booking\Actions\ListBookingsForUserAction;
-use App\Application\Contracts\Services\BookingServiceInterface;
-use App\Application\Booking\DTO\CreateBookingData;
+use App\Modules\Booking\Application\Actions\CancelBookingAction;
+use App\Modules\Booking\Application\Actions\CreateBookingAction;
+use App\Modules\Booking\Application\Actions\ListBookingsForUserAction;
+use App\Modules\Booking\Application\Contracts\BookingServiceInterface;
+use App\Modules\Booking\Application\DTO\CreateBookingData;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\User\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;

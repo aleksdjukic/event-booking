@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Booking\DTO;
+namespace App\Modules\Booking\Application\DTO;
 
 class CreateBookingData
 {

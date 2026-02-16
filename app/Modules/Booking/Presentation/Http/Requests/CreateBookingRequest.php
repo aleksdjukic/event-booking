@@ -2,7 +2,7 @@
 
 namespace App\Modules\Booking\Presentation\Http\Requests;
 
-use App\Application\Booking\DTO\CreateBookingData;
+use App\Modules\Booking\Application\DTO\CreateBookingData;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateBookingRequest extends FormRequest
