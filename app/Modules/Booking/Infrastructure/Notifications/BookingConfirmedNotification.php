@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Notifications\Booking;
+namespace App\Modules\Booking\Infrastructure\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

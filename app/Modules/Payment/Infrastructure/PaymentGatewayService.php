@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Payment;
+namespace App\Modules\Payment\Infrastructure;
 
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Services\PaymentGatewayInterface;

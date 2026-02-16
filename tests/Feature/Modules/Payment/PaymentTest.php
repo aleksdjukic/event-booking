@@ -9,7 +9,7 @@ use App\Domain\Payment\Enums\PaymentStatus;
 use App\Domain\Ticket\Models\Ticket;
 use App\Domain\User\Enums\Role;
 use App\Domain\User\Models\User;
-use App\Infrastructure\Notifications\Booking\BookingConfirmedNotification;
+use App\Modules\Booking\Infrastructure\Notifications\BookingConfirmedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;

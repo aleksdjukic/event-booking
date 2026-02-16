@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Eloquent;
+namespace App\Modules\Event\Infrastructure\Persistence\Eloquent;
 
 use App\Domain\Event\Repositories\EventRepositoryInterface;
 use App\Domain\Event\Models\Event;

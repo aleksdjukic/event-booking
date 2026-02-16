@@ -7,7 +7,7 @@ use App\Modules\Booking\Application\Services\BookingService;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Booking\Policies\BookingPolicy;
 use App\Domain\Booking\Repositories\BookingRepositoryInterface;
-use App\Infrastructure\Persistence\Eloquent\BookingRepository;
+use App\Modules\Booking\Infrastructure\Persistence\Eloquent\BookingRepository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

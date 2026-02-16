@@ -7,7 +7,7 @@ use App\Modules\Ticket\Application\Services\TicketService;
 use App\Domain\Ticket\Models\Ticket;
 use App\Domain\Ticket\Policies\TicketPolicy;
 use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
-use App\Infrastructure\Persistence\Eloquent\TicketRepository;
+use App\Modules\Ticket\Infrastructure\Persistence\Eloquent\TicketRepository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

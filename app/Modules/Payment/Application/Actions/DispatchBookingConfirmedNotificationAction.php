@@ -5,7 +5,7 @@ namespace App\Modules\Payment\Application\Actions;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Models\Payment;
 use App\Domain\User\Models\User;
-use App\Infrastructure\Notifications\Booking\BookingConfirmedNotification;
+use App\Modules\Booking\Infrastructure\Notifications\BookingConfirmedNotification;
 
 class DispatchBookingConfirmedNotificationAction
 {

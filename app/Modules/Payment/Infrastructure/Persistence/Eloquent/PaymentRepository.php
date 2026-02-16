@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Eloquent;
+namespace App\Modules\Payment\Infrastructure\Persistence\Eloquent;
 
 use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
 use App\Domain\Payment\Enums\PaymentStatus;

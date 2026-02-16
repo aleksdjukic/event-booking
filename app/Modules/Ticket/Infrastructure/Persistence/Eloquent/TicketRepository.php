@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Eloquent;
+namespace App\Modules\Ticket\Infrastructure\Persistence\Eloquent;
 
 use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
 use App\Domain\Event\Models\Event;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Eloquent;
+namespace App\Modules\Booking\Infrastructure\Persistence\Eloquent;
 
 use App\Domain\Booking\Repositories\BookingRepositoryInterface;
 use App\Domain\Booking\Enums\BookingStatus;

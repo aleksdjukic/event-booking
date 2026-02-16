@@ -9,9 +9,9 @@ use App\Domain\Payment\Policies\PaymentPolicy;
 use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
 use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
 use App\Domain\Payment\Services\PaymentGatewayInterface;
-use App\Infrastructure\Payment\PaymentGatewayService;
-use App\Infrastructure\Persistence\Eloquent\PaymentIdempotencyRepository;
-use App\Infrastructure\Persistence\Eloquent\PaymentRepository;
+use App\Modules\Payment\Infrastructure\PaymentGatewayService;
+use App\Modules\Payment\Infrastructure\Persistence\Eloquent\PaymentIdempotencyRepository;
+use App\Modules\Payment\Infrastructure\Persistence\Eloquent\PaymentRepository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

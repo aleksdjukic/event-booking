@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Eloquent;
+namespace App\Modules\Payment\Infrastructure\Persistence\Eloquent;
 
 use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
 use App\Domain\Payment\Models\PaymentIdempotencyKey;
