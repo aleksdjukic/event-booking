@@ -12,51 +12,51 @@ class EventTicketModuleSeeder extends Seeder
     public function run(): void
     {
         $organizers = User::query()
-            ->whereIn('email', ['organizer1@example.com', 'organizer2@example.com', 'organizer3@example.com'])
+            ->whereIn(User::COL_EMAIL, ['organizer1@example.com', 'organizer2@example.com', 'organizer3@example.com'])
             ->get()
-            ->keyBy('email');
+            ->keyBy(fn (User $user): string => (string) $user->{User::COL_EMAIL});
 
         $events = [
             [
-                'title' => 'Tech Conference 2026',
-                'description' => 'Annual software and cloud conference.',
-                'date' => '2026-06-10 10:00:00',
-                'location' => 'Belgrade',
-                'created_by' => $organizers->get('organizer1@example.com')?->id,
+                Event::COL_TITLE => 'Tech Conference 2026',
+                Event::COL_DESCRIPTION => 'Annual software and cloud conference.',
+                Event::COL_DATE => '2026-06-10 10:00:00',
+                Event::COL_LOCATION => 'Belgrade',
+                Event::COL_CREATED_BY => $organizers->get('organizer1@example.com')?->{User::COL_ID},
             ],
             [
-                'title' => 'Startup Networking Night',
-                'description' => null,
-                'date' => '2026-07-05 19:30:00',
-                'location' => 'Novi Sad',
-                'created_by' => $organizers->get('organizer2@example.com')?->id,
+                Event::COL_TITLE => 'Startup Networking Night',
+                Event::COL_DESCRIPTION => null,
+                Event::COL_DATE => '2026-07-05 19:30:00',
+                Event::COL_LOCATION => 'Novi Sad',
+                Event::COL_CREATED_BY => $organizers->get('organizer2@example.com')?->{User::COL_ID},
             ],
             [
-                'title' => 'Music Open Air',
-                'description' => 'Outdoor live performances.',
-                'date' => '2026-08-12 18:00:00',
-                'location' => 'Nis',
-                'created_by' => $organizers->get('organizer3@example.com')?->id,
+                Event::COL_TITLE => 'Music Open Air',
+                Event::COL_DESCRIPTION => 'Outdoor live performances.',
+                Event::COL_DATE => '2026-08-12 18:00:00',
+                Event::COL_LOCATION => 'Nis',
+                Event::COL_CREATED_BY => $organizers->get('organizer3@example.com')?->{User::COL_ID},
             ],
             [
-                'title' => 'Business Expo',
-                'description' => 'Exhibition for local businesses.',
-                'date' => '2026-09-20 09:00:00',
-                'location' => 'Belgrade',
-                'created_by' => $organizers->get('organizer1@example.com')?->id,
+                Event::COL_TITLE => 'Business Expo',
+                Event::COL_DESCRIPTION => 'Exhibition for local businesses.',
+                Event::COL_DATE => '2026-09-20 09:00:00',
+                Event::COL_LOCATION => 'Belgrade',
+                Event::COL_CREATED_BY => $organizers->get('organizer1@example.com')?->{User::COL_ID},
             ],
             [
-                'title' => 'Design Workshop',
-                'description' => 'Hands-on product design workshop.',
-                'date' => '2026-10-02 11:00:00',
-                'location' => 'Kragujevac',
-                'created_by' => $organizers->get('organizer2@example.com')?->id,
+                Event::COL_TITLE => 'Design Workshop',
+                Event::COL_DESCRIPTION => 'Hands-on product design workshop.',
+                Event::COL_DATE => '2026-10-02 11:00:00',
+                Event::COL_LOCATION => 'Kragujevac',
+                Event::COL_CREATED_BY => $organizers->get('organizer2@example.com')?->{User::COL_ID},
             ],
         ];
 
         foreach ($events as $eventData) {
             $event = Event::query()->updateOrCreate(
-                ['title' => $eventData['title'], 'date' => $eventData['date']],
+                [Event::COL_TITLE => $eventData[Event::COL_TITLE], Event::COL_DATE => $eventData[Event::COL_DATE]],
                 $eventData
             );
 
@@ -74,8 +74,8 @@ class EventTicketModuleSeeder extends Seeder
 
         foreach ($ticketTypePrice as $type => $price) {
             Ticket::query()->updateOrCreate(
-                ['event_id' => $eventId, 'type' => $type],
-                ['price' => $price, 'quantity' => 50]
+                [Ticket::COL_EVENT_ID => $eventId, Ticket::COL_TYPE => $type],
+                [Ticket::COL_PRICE => $price, Ticket::COL_QUANTITY => 50]
             );
         }
     }

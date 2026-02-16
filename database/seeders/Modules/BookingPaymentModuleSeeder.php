@@ -16,16 +16,16 @@ class BookingPaymentModuleSeeder extends Seeder
     public function run(): void
     {
         $customers = User::query()
-            ->where('email', 'like', 'customer%@example.com')
-            ->orderBy('email')
+            ->where(User::COL_EMAIL, 'like', 'customer%@example.com')
+            ->orderBy(User::COL_EMAIL)
             ->limit(10)
             ->get();
 
-        $tickets = Ticket::query()->orderBy('id')->get();
+        $tickets = Ticket::query()->orderBy(Ticket::COL_ID)->get();
 
         Payment::query()->delete();
         Booking::query()->delete();
-        Ticket::query()->update(['quantity' => 50]);
+        Ticket::query()->update([Ticket::COL_QUANTITY => 50]);
 
         $bookings = $this->seedBookings($customers, $tickets);
         $this->seedPayments($bookings, $tickets);
@@ -66,10 +66,10 @@ class BookingPaymentModuleSeeder extends Seeder
 
         foreach ($bookingsPlan as $plan) {
             $bookings->push(Booking::query()->create([
-                'user_id' => $customers[$plan['customer_index']]->id,
-                'ticket_id' => $tickets[$plan['ticket_index']]->id,
-                'quantity' => $plan['quantity'],
-                'status' => $plan['status']->value,
+                Booking::COL_USER_ID => $customers[$plan['customer_index']]->{User::COL_ID},
+                Booking::COL_TICKET_ID => $tickets[$plan['ticket_index']]->{Ticket::COL_ID},
+                Booking::COL_QUANTITY => $plan['quantity'],
+                Booking::COL_STATUS => $plan['status']->value,
             ]));
         }
 
@@ -87,15 +87,15 @@ class BookingPaymentModuleSeeder extends Seeder
             ->values();
 
         foreach ($confirmedBookings as $booking) {
-            $ticket = $tickets->firstWhere('id', $booking->ticket_id);
+            $ticket = $tickets->firstWhere(Ticket::COL_ID, $booking->{Booking::COL_TICKET_ID});
             if (! $ticket instanceof Ticket) {
                 continue;
             }
 
             Payment::query()->create([
-                'booking_id' => $booking->id,
-                'amount' => number_format($booking->quantity * (float) $ticket->price, 2, '.', ''),
-                'status' => PaymentStatus::SUCCESS->value,
+                Payment::COL_BOOKING_ID => $booking->{Booking::COL_ID},
+                Payment::COL_AMOUNT => number_format($booking->{Booking::COL_QUANTITY} * (float) $ticket->{Ticket::COL_PRICE}, 2, '.', ''),
+                Payment::COL_STATUS => PaymentStatus::SUCCESS->value,
             ]);
         }
 
@@ -107,30 +107,30 @@ class BookingPaymentModuleSeeder extends Seeder
             return;
         }
 
-        $cancelledTicket = $tickets->firstWhere('id', $cancelledBooking->ticket_id);
+        $cancelledTicket = $tickets->firstWhere(Ticket::COL_ID, $cancelledBooking->{Booking::COL_TICKET_ID});
         if (! $cancelledTicket instanceof Ticket) {
             return;
         }
 
         Payment::query()->create([
-            'booking_id' => $cancelledBooking->id,
-            'amount' => number_format($cancelledBooking->quantity * (float) $cancelledTicket->price, 2, '.', ''),
-            'status' => PaymentStatus::FAILED->value,
+            Payment::COL_BOOKING_ID => $cancelledBooking->{Booking::COL_ID},
+            Payment::COL_AMOUNT => number_format($cancelledBooking->{Booking::COL_QUANTITY} * (float) $cancelledTicket->{Ticket::COL_PRICE}, 2, '.', ''),
+            Payment::COL_STATUS => PaymentStatus::FAILED->value,
         ]);
     }
 
     private function syncRemainingTicketQuantities(): void
     {
         $confirmedByTicket = Booking::query()
-            ->selectRaw('ticket_id, SUM(quantity) as confirmed_quantity')
-            ->where('status', BookingStatus::CONFIRMED->value)
-            ->groupBy('ticket_id')
+            ->selectRaw(Booking::COL_TICKET_ID.', SUM('.Booking::COL_QUANTITY.') as confirmed_quantity')
+            ->where(Booking::COL_STATUS, BookingStatus::CONFIRMED->value)
+            ->groupBy(Booking::COL_TICKET_ID)
             ->get()
-            ->keyBy('ticket_id');
+            ->keyBy(fn (Booking $booking): int => (int) $booking->{Booking::COL_TICKET_ID});
 
         Ticket::query()->each(function (Ticket $ticket) use ($confirmedByTicket): void {
-            $confirmedQuantity = (int) optional($confirmedByTicket->get($ticket->id))->confirmed_quantity;
-            $ticket->update(['quantity' => max(0, 50 - $confirmedQuantity)]);
+            $confirmedQuantity = (int) optional($confirmedByTicket->get((int) $ticket->{Ticket::COL_ID}))->confirmed_quantity;
+            $ticket->update([Ticket::COL_QUANTITY => max(0, 50 - $confirmedQuantity)]);
         });
     }
 }
