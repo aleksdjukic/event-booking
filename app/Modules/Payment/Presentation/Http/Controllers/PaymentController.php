@@ -3,7 +3,7 @@
 namespace App\Modules\Payment\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\PaymentTransactionServiceInterface;
-use App\Http\Controllers\Api\V1\ApiController;
+use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Models\Payment;
 use App\Modules\Payment\Presentation\Http\Requests\CreatePaymentRequest;

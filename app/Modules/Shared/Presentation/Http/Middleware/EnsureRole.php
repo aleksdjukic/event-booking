@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Modules\Shared\Presentation\Http\Middleware;
 
 use App\Support\Http\ApiResponder;
 use Closure;

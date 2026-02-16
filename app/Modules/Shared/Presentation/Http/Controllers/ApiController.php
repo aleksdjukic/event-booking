@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Modules\Shared\Presentation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Support\Http\ApiResponder;

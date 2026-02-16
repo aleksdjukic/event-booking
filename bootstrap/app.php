@@ -2,7 +2,7 @@
 
 use App\Domain\Shared\DomainError;
 use App\Domain\Shared\DomainException;
-use App\Http\Middleware\EnsureRole;
+use App\Modules\Shared\Presentation\Http\Middleware\EnsureRole;
 use App\Support\Http\ApiResponder;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;

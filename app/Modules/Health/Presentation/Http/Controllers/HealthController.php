@@ -2,7 +2,7 @@
 
 namespace App\Modules\Health\Presentation\Http\Controllers;
 
-use App\Http\Controllers\Api\V1\ApiController;
+use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
 
 class HealthController extends ApiController

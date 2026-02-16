@@ -3,7 +3,7 @@
 namespace App\Modules\Event\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\EventServiceInterface;
-use App\Http\Controllers\Api\V1\ApiController;
+use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
 use App\Domain\Event\Models\Event;
 use App\Modules\Event\Presentation\Http\Requests\CreateEventRequest;
 use App\Modules\Event\Presentation\Http\Requests\DeleteEventRequest;

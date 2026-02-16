@@ -3,7 +3,7 @@
 namespace App\Modules\Booking\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\BookingServiceInterface;
-use App\Http\Controllers\Api\V1\ApiController;
+use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Ticket\Models\Ticket;
 use App\Modules\Booking\Presentation\Http\Requests\CancelBookingRequest;
