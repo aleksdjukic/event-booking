@@ -46,10 +46,11 @@ Key invariants:
 - Idempotency key cannot be reused for another booking.
 
 ## Architecture Snapshot
+- `app/Modules/*`: modular monolith slices (`Domain/Application/Infrastructure/Presentation`) per business capability.
 - `app/Domain/*`: domain models, enums, policies, repository interfaces, domain guards.
 - `app/Application/*`: use-case actions, DTOs, application services.
 - `app/Infrastructure/*`: Eloquent repositories, notifications, payment gateway adapter.
-- `app/Http/*`: controllers, form requests, resources, middleware.
+- `app/Modules/*/Presentation/*`: module routes, controllers, requests, resources, middleware.
 - `app/Support/*`: API responder, shared helpers/traits.
 
 Design direction:
@@ -59,7 +60,7 @@ Design direction:
 - Domain-first contracts + explicit invariants
 
 ## DDD & Modern Backend Practices
-- Domain-first structure with clear layer boundaries: `Domain`, `Application`, `Infrastructure`, `Http`.
+- Domain-first modular monolith with clear layer boundaries: `Domain`, `Application`, `Infrastructure`, `Presentation`.
 - Business rules are explicit (status enums, transition guards, policies, invariants).
 - Controllers are thin; validation is in Form Requests; use-cases live in application actions/services.
 - Interfaces define domain boundaries, while Eloquent/adapters stay in infrastructure.
