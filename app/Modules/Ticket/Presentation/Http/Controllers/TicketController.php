@@ -4,12 +4,12 @@ namespace App\Modules\Ticket\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\TicketServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;
-use App\Http\Requests\Api\V1\Ticket\CreateTicketRequest;
-use App\Http\Requests\Api\V1\Ticket\DeleteTicketRequest;
-use App\Http\Requests\Api\V1\Ticket\UpdateTicketRequest;
-use App\Http\Resources\Api\V1\Ticket\TicketResource;
 use App\Domain\Event\Models\Event;
 use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Ticket\Presentation\Http\Requests\CreateTicketRequest;
+use App\Modules\Ticket\Presentation\Http\Requests\DeleteTicketRequest;
+use App\Modules\Ticket\Presentation\Http\Requests\UpdateTicketRequest;
+use App\Modules\Ticket\Presentation\Http\Resources\TicketResource;
 use Illuminate\Http\JsonResponse;
 
 class TicketController extends ApiController

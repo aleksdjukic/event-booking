@@ -4,11 +4,11 @@ namespace App\Modules\Payment\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\PaymentTransactionServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;
-use App\Http\Requests\Api\V1\Payment\CreatePaymentRequest;
-use App\Http\Requests\Api\V1\Payment\ShowPaymentRequest;
-use App\Http\Resources\Api\V1\Payment\PaymentResource;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Payment\Models\Payment;
+use App\Modules\Payment\Presentation\Http\Requests\CreatePaymentRequest;
+use App\Modules\Payment\Presentation\Http\Requests\ShowPaymentRequest;
+use App\Modules\Payment\Presentation\Http\Resources\PaymentResource;
 use Illuminate\Http\JsonResponse;
 
 class PaymentController extends ApiController

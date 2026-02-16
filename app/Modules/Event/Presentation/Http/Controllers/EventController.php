@@ -4,12 +4,12 @@ namespace App\Modules\Event\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\EventServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;
-use App\Http\Requests\Api\V1\Event\ListEventsRequest;
-use App\Http\Requests\Api\V1\Event\CreateEventRequest;
-use App\Http\Requests\Api\V1\Event\DeleteEventRequest;
-use App\Http\Requests\Api\V1\Event\UpdateEventRequest;
-use App\Http\Resources\Api\V1\Event\EventResource;
 use App\Domain\Event\Models\Event;
+use App\Modules\Event\Presentation\Http\Requests\CreateEventRequest;
+use App\Modules\Event\Presentation\Http\Requests\DeleteEventRequest;
+use App\Modules\Event\Presentation\Http\Requests\ListEventsRequest;
+use App\Modules\Event\Presentation\Http\Requests\UpdateEventRequest;
+use App\Modules\Event\Presentation\Http\Resources\EventResource;
 use Illuminate\Http\JsonResponse;
 
 class EventController extends ApiController

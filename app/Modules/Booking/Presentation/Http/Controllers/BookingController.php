@@ -4,12 +4,12 @@ namespace App\Modules\Booking\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\BookingServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;
-use App\Http\Requests\Api\V1\Booking\CancelBookingRequest;
-use App\Http\Requests\Api\V1\Booking\CreateBookingRequest;
-use App\Http\Requests\Api\V1\Booking\ListBookingsRequest;
-use App\Http\Resources\Api\V1\Booking\BookingResource;
 use App\Domain\Booking\Models\Booking;
 use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Booking\Presentation\Http\Requests\CancelBookingRequest;
+use App\Modules\Booking\Presentation\Http\Requests\CreateBookingRequest;
+use App\Modules\Booking\Presentation\Http\Requests\ListBookingsRequest;
+use App\Modules\Booking\Presentation\Http\Resources\BookingResource;
 use Illuminate\Http\JsonResponse;
 
 class BookingController extends ApiController
