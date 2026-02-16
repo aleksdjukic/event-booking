@@ -12,4 +12,5 @@ class AuthModuleServiceProvider extends ServiceProvider
     {
         $this->app->bind(AuthServiceInterface::class, AuthService::class);
     }
+
 }
