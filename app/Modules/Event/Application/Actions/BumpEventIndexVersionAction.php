@@ -2,7 +2,7 @@
 
 namespace App\Modules\Event\Application\Actions;
 
-use App\Domain\Event\Support\EventCache;
+use App\Modules\Event\Domain\Support\EventCache;
 use Illuminate\Support\Facades\Cache;
 
 class BumpEventIndexVersionAction

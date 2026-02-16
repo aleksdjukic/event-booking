@@ -2,9 +2,9 @@
 
 namespace App\Modules\Payment\Application\Actions;
 
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Payment\Models\Payment;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Payment\Domain\Models\Payment;
+use App\Modules\User\Domain\Models\User;
 use App\Modules\Booking\Infrastructure\Notifications\BookingConfirmedNotification;
 
 class DispatchBookingConfirmedNotificationAction

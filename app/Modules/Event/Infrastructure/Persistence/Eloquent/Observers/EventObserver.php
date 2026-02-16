@@ -3,7 +3,7 @@
 namespace App\Modules\Event\Infrastructure\Persistence\Eloquent\Observers;
 
 use App\Modules\Event\Application\Actions\BumpEventIndexVersionAction;
-use App\Domain\Event\Models\Event;
+use App\Modules\Event\Domain\Models\Event;
 
 class EventObserver
 {

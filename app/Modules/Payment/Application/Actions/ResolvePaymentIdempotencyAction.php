@@ -3,11 +3,11 @@
 namespace App\Modules\Payment\Application\Actions;
 
 use App\Modules\Payment\Application\DTO\CreatePaymentData;
-use App\Domain\Payment\Models\PaymentIdempotencyKey;
-use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
+use App\Modules\Payment\Domain\Models\PaymentIdempotencyKey;
+use App\Modules\Payment\Domain\Repositories\PaymentIdempotencyRepositoryInterface;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
-use App\Domain\User\Models\User;
+use App\Modules\User\Domain\Models\User;
 
 class ResolvePaymentIdempotencyAction
 {

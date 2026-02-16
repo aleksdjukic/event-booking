@@ -2,7 +2,7 @@
 
 namespace App\Modules\Ticket\Presentation\Http\Resources;
 
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Ticket\Domain\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

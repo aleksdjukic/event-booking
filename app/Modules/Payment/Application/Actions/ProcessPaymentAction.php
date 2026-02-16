@@ -2,21 +2,21 @@
 
 namespace App\Modules\Payment\Application\Actions;
 
-use App\Domain\Booking\Repositories\BookingRepositoryInterface;
-use App\Domain\Payment\PaymentTransitionGuard;
-use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
-use App\Domain\Payment\Services\PaymentGatewayInterface;
+use App\Modules\Booking\Domain\Repositories\BookingRepositoryInterface;
+use App\Modules\Payment\Domain\PaymentTransitionGuard;
+use App\Modules\Payment\Domain\Repositories\PaymentRepositoryInterface;
+use App\Modules\Payment\Domain\Services\PaymentGatewayInterface;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
-use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
+use App\Modules\Ticket\Domain\Repositories\TicketRepositoryInterface;
 use App\Modules\Payment\Application\DTO\CreatePaymentData;
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Event\Models\Event;
-use App\Domain\Payment\Enums\PaymentStatus;
-use App\Domain\Payment\Models\Payment;
-use App\Domain\Ticket\Models\Ticket;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Payment\Domain\Enums\PaymentStatus;
+use App\Modules\Payment\Domain\Models\Payment;
+use App\Modules\Ticket\Domain\Models\Ticket;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 

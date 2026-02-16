@@ -8,8 +8,8 @@ use App\Modules\Ticket\Application\Actions\DeleteTicketAction;
 use App\Modules\Ticket\Application\Actions\UpdateTicketAction;
 use App\Modules\Ticket\Application\DTO\CreateTicketData;
 use App\Modules\Ticket\Application\DTO\UpdateTicketData;
-use App\Domain\Event\Models\Event;
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Ticket\Domain\Models\Ticket;
 
 class TicketService implements TicketServiceInterface
 {

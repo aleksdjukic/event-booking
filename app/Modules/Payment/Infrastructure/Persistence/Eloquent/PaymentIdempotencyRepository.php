@@ -2,8 +2,8 @@
 
 namespace App\Modules\Payment\Infrastructure\Persistence\Eloquent;
 
-use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
-use App\Domain\Payment\Models\PaymentIdempotencyKey;
+use App\Modules\Payment\Domain\Repositories\PaymentIdempotencyRepositoryInterface;
+use App\Modules\Payment\Domain\Models\PaymentIdempotencyKey;
 
 class PaymentIdempotencyRepository implements PaymentIdempotencyRepositoryInterface
 {

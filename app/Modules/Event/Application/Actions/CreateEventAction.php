@@ -3,9 +3,9 @@
 namespace App\Modules\Event\Application\Actions;
 
 use App\Modules\Event\Application\DTO\CreateEventData;
-use App\Domain\Event\Models\Event;
-use App\Domain\Event\Repositories\EventRepositoryInterface;
-use App\Domain\User\Models\User;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Event\Domain\Repositories\EventRepositoryInterface;
+use App\Modules\User\Domain\Models\User;
 
 class CreateEventAction
 {

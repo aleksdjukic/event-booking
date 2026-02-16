@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Modules\Booking;
 
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Event\Models\Event;
-use App\Domain\Ticket\Models\Ticket;
-use App\Domain\User\Enums\Role;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Ticket\Domain\Models\Ticket;
+use App\Modules\User\Domain\Enums\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\Concerns\CreatesUsers;

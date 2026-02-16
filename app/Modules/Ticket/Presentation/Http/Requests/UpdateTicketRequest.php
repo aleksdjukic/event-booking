@@ -3,7 +3,7 @@
 namespace App\Modules\Ticket\Presentation\Http\Requests;
 
 use App\Modules\Ticket\Application\DTO\UpdateTicketData;
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Ticket\Domain\Models\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTicketRequest extends FormRequest

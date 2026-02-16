@@ -2,8 +2,8 @@
 
 namespace App\Modules\Payment\Application\Actions;
 
-use App\Domain\Payment\Models\PaymentIdempotencyKey;
-use App\Domain\Payment\Repositories\PaymentIdempotencyRepositoryInterface;
+use App\Modules\Payment\Domain\Models\PaymentIdempotencyKey;
+use App\Modules\Payment\Domain\Repositories\PaymentIdempotencyRepositoryInterface;
 
 class AttachPaymentToIdempotencyRecordAction
 {

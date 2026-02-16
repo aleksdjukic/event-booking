@@ -2,10 +2,10 @@
 
 namespace App\Modules\Booking\Application\Actions;
 
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Booking\Repositories\BookingRepositoryInterface;
-use App\Domain\User\Enums\Role;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Booking\Domain\Repositories\BookingRepositoryInterface;
+use App\Modules\User\Domain\Enums\Role;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListBookingsForUserAction

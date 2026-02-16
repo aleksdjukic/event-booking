@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Domain;
 
-use App\Domain\Booking\BookingTransitionGuard;
-use App\Domain\Booking\Enums\BookingStatus;
+use App\Modules\Booking\Domain\BookingTransitionGuard;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
 use PHPUnit\Framework\TestCase;
 
 class BookingTransitionGuardTest extends TestCase

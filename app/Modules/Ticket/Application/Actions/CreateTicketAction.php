@@ -4,11 +4,11 @@ namespace App\Modules\Ticket\Application\Actions;
 
 use App\Modules\Event\Application\Actions\BumpEventIndexVersionAction;
 use App\Modules\Ticket\Application\DTO\CreateTicketData;
-use App\Domain\Event\Models\Event;
+use App\Modules\Event\Domain\Models\Event;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
-use App\Domain\Ticket\Models\Ticket;
-use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
+use App\Modules\Ticket\Domain\Models\Ticket;
+use App\Modules\Ticket\Domain\Repositories\TicketRepositoryInterface;
 
 class CreateTicketAction
 {

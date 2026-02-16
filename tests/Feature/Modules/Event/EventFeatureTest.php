@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Modules\Event;
 
-use App\Domain\Event\Support\EventCache;
-use App\Domain\User\Enums\Role;
+use App\Modules\Event\Domain\Support\EventCache;
+use App\Modules\User\Domain\Enums\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\Sanctum;

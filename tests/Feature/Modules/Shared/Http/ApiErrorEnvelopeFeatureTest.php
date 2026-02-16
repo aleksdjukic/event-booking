@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Modules\Shared\Http;
 
-use App\Domain\User\Enums\Role;
+use App\Modules\User\Domain\Enums\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\Concerns\CreatesUsers;

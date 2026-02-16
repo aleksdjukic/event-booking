@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Modules\Shared;
 
-use App\Domain\Event\Models\Event;
-use App\Domain\Ticket\Models\Ticket;
-use App\Domain\User\Enums\Role;
-use App\Domain\User\Models\User;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Ticket\Domain\Models\Ticket;
+use App\Modules\User\Domain\Enums\Role;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\Concerns\CreatesUsers;

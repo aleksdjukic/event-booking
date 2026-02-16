@@ -2,7 +2,7 @@
 
 namespace App\Modules\Event\Presentation\Http\Requests;
 
-use App\Domain\Event\Models\Event;
+use App\Modules\Event\Domain\Models\Event;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DeleteEventRequest extends FormRequest

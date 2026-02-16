@@ -5,11 +5,11 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Ticket\Models\Ticket>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Modules\Ticket\Domain\Models\Ticket>
  */
 class TicketFactory extends Factory
 {
-    protected $model = \App\Domain\Ticket\Models\Ticket::class;
+    protected $model = \App\Modules\Ticket\Domain\Models\Ticket::class;
 
     /**
      * Define the model's default state.

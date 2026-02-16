@@ -2,7 +2,7 @@
 
 namespace App\Modules\Payment\Presentation\Http\Requests;
 
-use App\Domain\Payment\Models\Payment;
+use App\Modules\Payment\Domain\Models\Payment;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ShowPaymentRequest extends FormRequest

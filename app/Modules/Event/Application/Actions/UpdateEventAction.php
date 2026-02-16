@@ -3,8 +3,8 @@
 namespace App\Modules\Event\Application\Actions;
 
 use App\Modules\Event\Application\DTO\UpdateEventData;
-use App\Domain\Event\Models\Event;
-use App\Domain\Event\Repositories\EventRepositoryInterface;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Event\Domain\Repositories\EventRepositoryInterface;
 
 class UpdateEventAction
 {

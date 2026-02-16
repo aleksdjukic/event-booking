@@ -2,10 +2,10 @@
 
 namespace App\Modules\Payment\Application\Actions;
 
-use App\Domain\Booking\Models\Booking;
+use App\Modules\Booking\Domain\Models\Booking;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Ticket\Domain\Models\Ticket;
 
 class EnsureTicketInventoryForBookingAction
 {

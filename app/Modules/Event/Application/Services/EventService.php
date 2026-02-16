@@ -11,8 +11,8 @@ use App\Modules\Event\Application\Actions\UpdateEventAction;
 use App\Modules\Event\Application\DTO\CreateEventData;
 use App\Modules\Event\Application\DTO\ListEventsData;
 use App\Modules\Event\Application\DTO\UpdateEventData;
-use App\Domain\Event\Models\Event;
-use App\Domain\User\Models\User;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventService implements EventServiceInterface

@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Payment\Enums\PaymentStatus;
-use App\Domain\Ticket\Models\Ticket;
-use App\Domain\User\Enums\Role;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Payment\Domain\Enums\PaymentStatus;
+use App\Modules\Ticket\Domain\Models\Ticket;
+use App\Modules\User\Domain\Enums\Role;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;

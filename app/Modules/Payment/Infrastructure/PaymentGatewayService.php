@@ -2,8 +2,8 @@
 
 namespace App\Modules\Payment\Infrastructure;
 
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Payment\Services\PaymentGatewayInterface;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Payment\Domain\Services\PaymentGatewayInterface;
 
 class PaymentGatewayService implements PaymentGatewayInterface
 {

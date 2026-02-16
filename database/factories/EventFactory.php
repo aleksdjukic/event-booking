@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Domain\User\Models\User;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Event\Models\Event>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Modules\Event\Domain\Models\Event>
  */
 class EventFactory extends Factory
 {
-    protected $model = \App\Domain\Event\Models\Event::class;
+    protected $model = \App\Modules\Event\Domain\Models\Event::class;
 
     /**
      * Define the model's default state.

@@ -3,8 +3,8 @@
 namespace App\Modules\Booking\Application\Contracts;
 
 use App\Modules\Booking\Application\DTO\CreateBookingData;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface BookingServiceInterface

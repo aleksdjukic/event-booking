@@ -2,11 +2,11 @@
 
 namespace App\Modules\Payment\Application\Actions;
 
-use App\Domain\Booking\Models\Booking;
+use App\Modules\Booking\Domain\Models\Booking;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
-use App\Domain\User\Enums\Role;
-use App\Domain\User\Models\User;
+use App\Modules\User\Domain\Enums\Role;
+use App\Modules\User\Domain\Models\User;
 
 class AuthorizeBookingPaymentAction
 {

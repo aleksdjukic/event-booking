@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Modules\Auth;
 
-use App\Domain\User\Enums\Role;
-use App\Domain\User\Models\User;
+use App\Modules\User\Domain\Enums\Role;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;

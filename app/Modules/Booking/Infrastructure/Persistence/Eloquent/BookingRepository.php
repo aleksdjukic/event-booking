@@ -2,10 +2,10 @@
 
 namespace App\Modules\Booking\Infrastructure\Persistence\Eloquent;
 
-use App\Domain\Booking\Repositories\BookingRepositoryInterface;
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Repositories\BookingRepositoryInterface;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookingRepository implements BookingRepositoryInterface

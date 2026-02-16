@@ -2,10 +2,10 @@
 
 namespace App\Modules\Payment\Infrastructure\Persistence\Eloquent;
 
-use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
-use App\Domain\Payment\Enums\PaymentStatus;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Payment\Models\Payment;
+use App\Modules\Payment\Domain\Repositories\PaymentRepositoryInterface;
+use App\Modules\Payment\Domain\Enums\PaymentStatus;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Payment\Domain\Models\Payment;
 
 class PaymentRepository implements PaymentRepositoryInterface
 {

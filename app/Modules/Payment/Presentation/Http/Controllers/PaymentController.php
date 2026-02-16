@@ -4,8 +4,8 @@ namespace App\Modules\Payment\Presentation\Http\Controllers;
 
 use App\Modules\Payment\Application\Contracts\PaymentTransactionServiceInterface;
 use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Payment\Models\Payment;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Payment\Domain\Models\Payment;
 use App\Modules\Payment\Presentation\Http\Requests\CreatePaymentRequest;
 use App\Modules\Payment\Presentation\Http\Requests\ShowPaymentRequest;
 use App\Modules\Payment\Presentation\Http\Resources\PaymentResource;

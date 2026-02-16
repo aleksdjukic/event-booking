@@ -2,8 +2,8 @@
 
 namespace App\Modules\Payment\Presentation\Http\Resources;
 
-use App\Domain\Payment\Enums\PaymentStatus;
-use App\Domain\Payment\Models\Payment;
+use App\Modules\Payment\Domain\Enums\PaymentStatus;
+use App\Modules\Payment\Domain\Models\Payment;
 use App\Modules\Booking\Presentation\Http\Resources\BookingResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

@@ -3,9 +3,9 @@
 namespace App\Modules\Event\Application\Actions;
 
 use App\Modules\Event\Application\DTO\ListEventsData;
-use App\Domain\Event\Models\Event;
-use App\Domain\Event\Repositories\EventRepositoryInterface;
-use App\Domain\Event\Support\EventCache;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Event\Domain\Repositories\EventRepositoryInterface;
+use App\Modules\Event\Domain\Support\EventCache;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 

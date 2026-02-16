@@ -2,8 +2,8 @@
 
 namespace Tests\Concerns;
 
-use App\Domain\User\Enums\Role;
-use App\Domain\User\Models\User;
+use App\Modules\User\Domain\Enums\Role;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 trait CreatesUsers

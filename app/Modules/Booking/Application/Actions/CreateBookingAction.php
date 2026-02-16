@@ -2,14 +2,14 @@
 
 namespace App\Modules\Booking\Application\Actions;
 
-use App\Domain\Booking\Repositories\BookingRepositoryInterface;
+use App\Modules\Booking\Domain\Repositories\BookingRepositoryInterface;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
-use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
+use App\Modules\Ticket\Domain\Repositories\TicketRepositoryInterface;
 use App\Modules\Booking\Application\DTO\CreateBookingData;
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 

@@ -3,8 +3,8 @@
 namespace App\Modules\Ticket\Application\Actions;
 
 use App\Modules\Event\Application\Actions\BumpEventIndexVersionAction;
-use App\Domain\Ticket\Models\Ticket;
-use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
+use App\Modules\Ticket\Domain\Models\Ticket;
+use App\Modules\Ticket\Domain\Repositories\TicketRepositoryInterface;
 
 class DeleteTicketAction
 {

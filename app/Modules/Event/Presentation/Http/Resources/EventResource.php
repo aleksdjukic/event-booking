@@ -2,7 +2,7 @@
 
 namespace App\Modules\Event\Presentation\Http\Resources;
 
-use App\Domain\Event\Models\Event;
+use App\Modules\Event\Domain\Models\Event;
 use App\Modules\Ticket\Presentation\Http\Resources\TicketResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

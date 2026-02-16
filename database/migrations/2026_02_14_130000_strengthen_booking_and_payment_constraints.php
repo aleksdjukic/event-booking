@@ -1,7 +1,7 @@
 <?php
 
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Payment\Enums\PaymentStatus;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Payment\Domain\Enums\PaymentStatus;
 use App\Support\Database\SqlList;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

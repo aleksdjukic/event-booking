@@ -2,10 +2,10 @@
 
 namespace App\Modules\Booking\Application\Actions;
 
-use App\Domain\Booking\BookingTransitionGuard;
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Booking\Repositories\BookingRepositoryInterface;
+use App\Modules\Booking\Domain\BookingTransitionGuard;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Booking\Domain\Repositories\BookingRepositoryInterface;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
 

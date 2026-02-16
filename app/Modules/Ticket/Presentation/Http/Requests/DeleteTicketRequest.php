@@ -2,7 +2,7 @@
 
 namespace App\Modules\Ticket\Presentation\Http\Requests;
 
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Ticket\Domain\Models\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DeleteTicketRequest extends FormRequest

@@ -2,9 +2,9 @@
 
 namespace App\Modules\Payment\Application\Actions;
 
-use App\Domain\Booking\BookingTransitionGuard;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Payment\Repositories\PaymentRepositoryInterface;
+use App\Modules\Booking\Domain\BookingTransitionGuard;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Payment\Domain\Repositories\PaymentRepositoryInterface;
 use App\Modules\Shared\Domain\DomainError;
 use App\Modules\Shared\Domain\DomainException;
 

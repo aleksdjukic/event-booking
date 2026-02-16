@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Domain\Payment\Enums\PaymentStatus;
+use App\Modules\Payment\Domain\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Payment\Models\Payment>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Modules\Payment\Domain\Models\Payment>
  */
 class PaymentFactory extends Factory
 {
-    protected $model = \App\Domain\Payment\Models\Payment::class;
+    protected $model = \App\Modules\Payment\Domain\Models\Payment::class;
 
     /**
      * Define the model's default state.

@@ -2,9 +2,9 @@
 
 namespace App\Modules\Ticket\Infrastructure\Persistence\Eloquent;
 
-use App\Domain\Ticket\Repositories\TicketRepositoryInterface;
-use App\Domain\Event\Models\Event;
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Ticket\Domain\Repositories\TicketRepositoryInterface;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Ticket\Domain\Models\Ticket;
 
 class TicketRepository implements TicketRepositoryInterface
 {

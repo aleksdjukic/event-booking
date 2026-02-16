@@ -4,8 +4,8 @@ namespace App\Modules\Ticket\Presentation\Http\Controllers;
 
 use App\Modules\Ticket\Application\Contracts\TicketServiceInterface;
 use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
-use App\Domain\Event\Models\Event;
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Ticket\Domain\Models\Ticket;
 use App\Modules\Ticket\Presentation\Http\Requests\CreateTicketRequest;
 use App\Modules\Ticket\Presentation\Http\Requests\DeleteTicketRequest;
 use App\Modules\Ticket\Presentation\Http\Requests\UpdateTicketRequest;

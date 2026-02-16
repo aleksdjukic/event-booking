@@ -2,9 +2,9 @@
 
 namespace App\Modules\Event\Infrastructure\Persistence\Eloquent;
 
-use App\Domain\Event\Repositories\EventRepositoryInterface;
-use App\Domain\Event\Models\Event;
-use App\Domain\User\Models\User;
+use App\Modules\Event\Domain\Repositories\EventRepositoryInterface;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\User\Domain\Models\User;
 use App\Modules\Shared\Support\Traits\CommonQueryScopes;
 use Illuminate\Pagination\LengthAwarePaginator;
 

@@ -2,8 +2,8 @@
 
 namespace App\Modules\Booking\Presentation\Http\Resources;
 
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\Booking\Models\Booking;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\Booking\Domain\Models\Booking;
 use App\Modules\Payment\Presentation\Http\Resources\PaymentResource;
 use App\Modules\Ticket\Presentation\Http\Resources\TicketResource;
 use Illuminate\Http\Request;

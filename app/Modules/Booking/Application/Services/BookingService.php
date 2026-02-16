@@ -7,8 +7,8 @@ use App\Modules\Booking\Application\Actions\CreateBookingAction;
 use App\Modules\Booking\Application\Actions\ListBookingsForUserAction;
 use App\Modules\Booking\Application\Contracts\BookingServiceInterface;
 use App\Modules\Booking\Application\DTO\CreateBookingData;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookingService implements BookingServiceInterface

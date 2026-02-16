@@ -2,16 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Domain\Booking\Enums\BookingStatus;
-use App\Domain\User\Models\User;
+use App\Modules\Booking\Domain\Enums\BookingStatus;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Booking\Models\Booking>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Modules\Booking\Domain\Models\Booking>
  */
 class BookingFactory extends Factory
 {
-    protected $model = \App\Domain\Booking\Models\Booking::class;
+    protected $model = \App\Modules\Booking\Domain\Models\Booking::class;
 
     /**
      * Define the model's default state.

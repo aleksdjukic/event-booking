@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Modules\Shared\Http;
 
-use App\Domain\Event\Models\Event;
-use App\Domain\User\Enums\Role;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\User\Domain\Enums\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\Concerns\CreatesUsers;

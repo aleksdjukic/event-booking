@@ -4,7 +4,7 @@ namespace App\Modules\Auth\Application\Contracts;
 
 use App\Modules\Auth\Application\DTO\LoginData;
 use App\Modules\Auth\Application\DTO\RegisterData;
-use App\Domain\User\Models\User;
+use App\Modules\User\Domain\Models\User;
 
 interface AuthServiceInterface
 {

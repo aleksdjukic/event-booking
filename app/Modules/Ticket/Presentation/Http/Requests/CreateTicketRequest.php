@@ -3,8 +3,8 @@
 namespace App\Modules\Ticket\Presentation\Http\Requests;
 
 use App\Modules\Ticket\Application\DTO\CreateTicketData;
-use App\Domain\Event\Models\Event;
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Event\Domain\Models\Event;
+use App\Modules\Ticket\Domain\Models\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateTicketRequest extends FormRequest

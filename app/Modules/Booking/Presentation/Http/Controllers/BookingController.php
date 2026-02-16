@@ -4,8 +4,8 @@ namespace App\Modules\Booking\Presentation\Http\Controllers;
 
 use App\Modules\Booking\Application\Contracts\BookingServiceInterface;
 use App\Modules\Shared\Presentation\Http\Controllers\ApiController;
-use App\Domain\Booking\Models\Booking;
-use App\Domain\Ticket\Models\Ticket;
+use App\Modules\Booking\Domain\Models\Booking;
+use App\Modules\Ticket\Domain\Models\Ticket;
 use App\Modules\Booking\Presentation\Http\Requests\CancelBookingRequest;
 use App\Modules\Booking\Presentation\Http\Requests\CreateBookingRequest;
 use App\Modules\Booking\Presentation\Http\Requests\ListBookingsRequest;

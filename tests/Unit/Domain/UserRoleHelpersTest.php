@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Domain;
 
-use App\Domain\User\Enums\Role;
-use App\Domain\User\Models\User;
+use App\Modules\User\Domain\Enums\Role;
+use App\Modules\User\Domain\Models\User;
 use PHPUnit\Framework\TestCase;
 
 class UserRoleHelpersTest extends TestCase
