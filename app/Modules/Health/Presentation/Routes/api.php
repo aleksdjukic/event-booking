@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Health\HealthController;
+use App\Modules\Health\Presentation\Http\Controllers\HealthController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {

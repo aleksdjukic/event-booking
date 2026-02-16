@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Health;
+namespace App\Modules\Health\Presentation\Http\Controllers;
 
 use App\Http\Controllers\Api\V1\ApiController;
 use Illuminate\Http\JsonResponse;

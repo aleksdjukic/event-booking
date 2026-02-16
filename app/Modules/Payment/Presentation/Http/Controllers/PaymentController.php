@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Payment;
+namespace App\Modules\Payment\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\PaymentTransactionServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;

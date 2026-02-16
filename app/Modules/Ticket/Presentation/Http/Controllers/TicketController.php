@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Ticket;
+namespace App\Modules\Ticket\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\TicketServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;

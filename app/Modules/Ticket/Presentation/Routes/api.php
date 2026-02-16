@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Ticket\TicketController;
+use App\Modules\Ticket\Presentation\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {

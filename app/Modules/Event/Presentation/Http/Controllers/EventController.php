@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Event;
+namespace App\Modules\Event\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\EventServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;

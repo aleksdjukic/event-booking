@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Auth;
+namespace App\Modules\Auth\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\AuthServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;

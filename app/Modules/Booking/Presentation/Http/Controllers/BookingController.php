@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Booking;
+namespace App\Modules\Booking\Presentation\Http\Controllers;
 
 use App\Application\Contracts\Services\BookingServiceInterface;
 use App\Http\Controllers\Api\V1\ApiController;

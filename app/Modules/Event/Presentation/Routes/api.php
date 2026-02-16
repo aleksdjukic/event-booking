@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Event\EventController;
+use App\Modules\Event\Presentation\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {

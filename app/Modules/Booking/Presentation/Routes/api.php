@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Booking\BookingController;
+use App\Modules\Booking\Presentation\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
