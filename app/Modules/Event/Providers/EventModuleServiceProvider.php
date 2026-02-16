@@ -5,9 +5,11 @@ namespace App\Modules\Event\Providers;
 use App\Application\Contracts\Services\EventServiceInterface;
 use App\Application\Services\Event\EventService;
 use App\Domain\Event\Models\Event;
+use App\Domain\Event\Policies\EventPolicy;
 use App\Domain\Event\Repositories\EventRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\EventRepository;
 use App\Infrastructure\Persistence\Eloquent\Observers\EventObserver;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class EventModuleServiceProvider extends ServiceProvider
@@ -20,6 +22,7 @@ class EventModuleServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Gate::policy(Event::class, EventPolicy::class);
         Event::observe(EventObserver::class);
     }
 }

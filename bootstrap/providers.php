@@ -2,7 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\AuthServiceProvider::class,
     App\Modules\Auth\Providers\AuthModuleServiceProvider::class,
     App\Modules\Event\Providers\EventModuleServiceProvider::class,
     App\Modules\Ticket\Providers\TicketModuleServiceProvider::class,
